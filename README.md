@@ -1,0 +1,76 @@
+Copy user permissions Confluence plug-in
+========================================
+
+Purpose of this plug-in is to provide admin UI to copy Confluence user's space permissions to another Confluence user. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
+
+REST-API
+--------
+
+**/userpermissions/{user-id} [GET, PUT]**
+- GET returns users all space permissions as JSON:
+{
+	"spacePermissions": [
+		{
+			"space": "spaceKey1",
+			"permissions": {
+				"REMOVE_PAGE_PERMISSION": false,
+				"ADMINISTER_SPACE_PERMISSION": false,
+				"COMMENT_PERMISSION": true,
+				"CREATE_ATTACHMENT_PERMISSION": true,
+				"CREATEEDIT_PAGE_PERMISSION": true,
+				"EDITBLOG_PERMISSION": true,
+				"EXPORT_SPACE_PERMISSION": true,
+				"REMOVE_ATTACHMENT_PERMISSION": true,
+				"REMOVE_BLOG_PERMISSION": true,
+				"REMOVE_COMMENT_PERMISSION": true,
+				"REMOVE_MAIL_PERMISSION": true,
+				"REMOVE_PAGE_PERMISSION": true,
+				"SET_PAGE_PERMISSIONS_PERMISSION": true,
+				"VIEWSPACE_PERMISSION": true
+				}
+		},
+		{
+			"space": "spaceKey2",
+			  "permissions": {
+				"REMOVE_PAGE_PERMISSION": false,
+				"ADMINISTER_SPACE_PERMISSION": false,
+				"COMMENT_PERMISSION": true,
+				"CREATE_ATTACHMENT_PERMISSION": true,
+				"CREATEEDIT_PAGE_PERMISSION": true,
+				"EDITBLOG_PERMISSION": true,
+				"EXPORT_SPACE_PERMISSION": true,
+				"REMOVE_ATTACHMENT_PERMISSION": true,
+				"REMOVE_BLOG_PERMISSION": true,
+				"REMOVE_COMMENT_PERMISSION": true,
+				"REMOVE_MAIL_PERMISSION": true,
+				"REMOVE_PAGE_PERMISSION": true,
+				"SET_PAGE_PERMISSIONS_PERMISSION": true,
+				"VIEWSPACE_PERMISSION": true
+				}
+		}
+	]
+ }
+- PUT updates user's permissions according to payload
+
+HELP
+====
+
+Atlassian Plugin SDK:
+https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK
+
+Debugging a Confluence plugin:
+https://developer.atlassian.com/display/DOCS/Creating+a+Remote+Debug+Target
+
+- Start from command prompt with atlas-debug and in Eclipse using 5005 port with debug profile.
+
+Learn and use FastDev:
+https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+with+FastDev
+
+- Make changes to the source files and reload the changes with FastDev from development environment Confluence instance from browser. It will compile and deploy the result to the running Confluence. There is no need to restart Confluence. Javascript changes do not need to be redeployed. You will just need to reload the page.
+
+TODO
+====
+
+1. Implement UI to show permissions that we copied to the target user.
+2. Implement UI to display one user's permissions. No copying would be done in this use case.
+3. Handle TODO's added to code files. For example get rid off hard coded test data.

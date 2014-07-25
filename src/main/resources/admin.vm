@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>$i18n.getText("userpermissions.admin.label")</title>
+	<meta name="decorator" content="atl.admin">
+	$webResourceManager.requireResource("org.ttorvela.confluence.plugins.confluence-copy-user-permissions:resources")
+	<meta name="application-base-url" content="$applicationProperties.getBaseUrl()">
+  </head>
+  <body>
+    <script type="text/javascript">
+      var baseUrl = "$applicationProperties.getBaseUrl()";
+    </script>
+    <form id="admin" class="aui">
+	  <div class="field-group">
+		<label for="usernameFrom">$i18n.getText("userpermissions.admin.username.from.label")</label>
+		<input type="text" id="usernameFrom" name="usernameFrom" class="text">
+	  </div>
+	  <div class="field-group">
+		<label for="usernameTo">$i18n.getText("userpermissions.admin.username.to.label")</label>
+		<input type="text" id="usernameTo" name="usernameTo" class="text">
+	  </div>
+	  <div class="field-group">
+		<input type="submit" value="$i18n.getText("userpermissions.admin.copy.label")" class="button">
+	  </div>
+	  </div>
+	</form>
+	<div id="results">
+  </body>
+</html>

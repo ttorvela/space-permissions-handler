@@ -1,0 +1,57 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="confluence-copy-user-permissions"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="resources" name="confluence-copy-user-permissions Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="confluence-copy-user-permissions.css" location="/css/confluence-copy-user-permissions.css"/>
+        <resource type="download" name="confluence-copy-user-permissions.js" location="/js/confluence-copy-user-permissions.js"/>
+		<resource type="download" name="admin.js" location="/js/admin.js"/> 
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>confluence-copy-user-permissions</context>
+    </web-resource>
+
+    <!-- import from the product container -->
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+	
+	<component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" />
+	<component-import key="spacePermissionManager" interface="com.atlassian.confluence.security.SpacePermissionManager" />
+	<component-import key="permissionManager" interface="com.atlassian.confluence.security.PermissionManager" />
+	<component-import key="spaceManager" interface="com.atlassian.confluence.spaces.SpaceManager" />
+	<component-import key="userAccessor" interface="com.atlassian.confluence.user.UserAccessor" />
+	
+	<component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />
+	<component-import key="renderer" interface="com.atlassian.templaterenderer.velocity.one.six.VelocityTemplateRenderer" />
+	
+	<component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />
+	<component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />
+	 
+	<rest key="rest" path="/userpermissions" version="1.0">
+	  <description>Provides REST resources for the user permissions UI.</description>
+	</rest>
+	
+	<servlet key="admin-servlet" class="org.ttorvela.confluence.plugins.copyuserpermissions.AdminServlet">
+	  <url-pattern>/userpermissions/admin</url-pattern>
+	</servlet>
+	
+	<template-context-item key="applicationPropertiesContextItem" component-ref="applicationProperties"
+context-key="applicationProperties" name="Application Properties Context Item"/> 
+
+	<web-item key="conf-menu-item" name="User Permissions" section="system.admin/configuration" weight="10">
+	  <description>Link to User Permissions admin page.</description>
+	  <label key="userpermissions.admin.label" />
+	  <link linkId="userpermissions-link">/plugins/servlet/userpermissions/admin</link>
+	</web-item> 
+    
+</atlassian-plugin>

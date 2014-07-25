@@ -26,11 +26,19 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
-
+Icon
 # Thumbnails
 ._*
 
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# =========================
+# Maven specific ignores
+# =========================
+
+.classpath
+.project
+.settings/
+target/
