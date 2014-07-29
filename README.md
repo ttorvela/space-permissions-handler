@@ -68,9 +68,18 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 
 - Make changes to the source files and reload the changes with FastDev from development environment Confluence instance from browser. It will compile and deploy the result to the running Confluence. There is no need to restart Confluence. Javascript changes do not need to be redeployed. You will just need to reload the page.
 
+CURRENT STATUS
+==============
+
+29.7.2014
+---------
+
+It is finally working. Extensive tests have not been performed but at least with test users in test environment it is possible to specify a user whose permissions will be copied to another user. If the source user has permission via groups those permissions will be added to the target user as individual permissions even when the target user belongs to the same groups.
+
+There is no UI yet that would display wether the copying was successful or not!
+
 TODO
 ====
 
-1. Implement UI to show permissions that we copied to the target user.
+1. Implement UI to show permissions that were copied to the target user.
 2. Implement UI to display one user's permissions. No copying would be done in this use case.
-3. Handle TODO's added to code files. For example get rid off hard coded test data.

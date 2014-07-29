@@ -21,8 +21,6 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
 import com.atlassian.sal.api.transaction.TransactionTemplate;
 import com.atlassian.sal.api.user.UserManager;
 
-//import org.ttorvela.confluence.plugins.copyuserpermissions.RestUserPermissionManager;
-//import org.ttorvela.confluence.plugins.copyuserpermissions.UserPermissionsEntity;
 
 @Path("/")
 public class UserPermissionsResource {
