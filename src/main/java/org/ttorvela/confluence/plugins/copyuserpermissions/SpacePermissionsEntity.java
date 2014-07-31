@@ -30,11 +30,14 @@ public class SpacePermissionsEntity {
 	public SpacePermissionsEntity() {
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setPermissionStatus(String permission, boolean status) {
 		if (permission.equalsIgnoreCase(SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION)) {
 			permissions.setSetPagePermissions(status);
 		} else if (permission.equalsIgnoreCase(SpacePermission.VIEWSPACE_PERMISSION)) {
 			permissions.setViewSpace(status);
+		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_PAGE_PERMISSION)) {
+			permissions.setExportPage(status);
 		} else if (permission.equalsIgnoreCase(SpacePermission.ADMINISTER_SPACE_PERMISSION)) {
 			permissions.setEditSpace(status);
 		} else if (permission.equalsIgnoreCase(SpacePermission.COMMENT_PERMISSION)) {
@@ -60,6 +63,7 @@ public class SpacePermissionsEntity {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public boolean getPermissionStatus(String permission) {
 		boolean status = false;
 		
@@ -67,6 +71,8 @@ public class SpacePermissionsEntity {
 			status = permissions.getSetPagePermissions();
 		} else if (permission.equalsIgnoreCase(SpacePermission.VIEWSPACE_PERMISSION)) {
 			status = permissions.getViewSpace();
+		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_PAGE_PERMISSION)) {
+			status = permissions.getExportPage();
 		} else if (permission.equalsIgnoreCase(SpacePermission.ADMINISTER_SPACE_PERMISSION)) {
 			status = permissions.getEditSpace();
 		} else if (permission.equalsIgnoreCase(SpacePermission.COMMENT_PERMISSION)) {

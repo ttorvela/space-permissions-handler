@@ -26,7 +26,7 @@ AJS.toInit(function() {
 				promise.success(function(permissions) {
 					copyPermissions(permissions);
 					var $permissionResults = $("#results");
-					$permissionResults.append("<h2 id='permissions'>Permissions copied</h2>");
+					$permissionResults.html("<h2 id='permissions'>Permissions copied</h2>");
 					$permissionResults.append("<div><pre>"
 							+ JSON.stringify(permissions, null, 4)
 							+ "</pre></div>");

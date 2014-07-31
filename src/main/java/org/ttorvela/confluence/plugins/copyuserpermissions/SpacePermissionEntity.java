@@ -9,9 +9,12 @@ public class SpacePermissionEntity {
 	@XmlElement
 	private boolean createPage;
 	@XmlElement
+	private boolean exportPage;
+	@XmlElement
 	private boolean setPagePermissions;
 	@XmlElement
 	private boolean removePage;
+	
 	
 	@XmlElement
 	private boolean createBlogPost;
@@ -67,6 +70,14 @@ public class SpacePermissionEntity {
 
 	public void setCreatePage(boolean createPage) {
 		this.createPage = createPage;
+	}
+	
+	public boolean getExportPage() {
+		return exportPage;
+	}
+
+	public void setExportPage(boolean exportPage) {
+		this.exportPage = exportPage;
 	}
 
 	public boolean getCreateBlogPost() {
