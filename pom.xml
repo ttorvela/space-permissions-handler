@@ -14,7 +14,7 @@
         <url>https://twitter.com/thimei</url>
     </organization>
 
-    <name>confluence-copy-user-permissions</name>
+    <name>Confluence Copy User Permissions</name>
     <description>Copies Confluence user's permissions to another user.</description>
     <packaging>atlassian-plugin</packaging>
 
