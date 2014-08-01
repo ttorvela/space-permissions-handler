@@ -21,6 +21,8 @@
 	  <div class="field-group">
 		<input type="submit" value="$i18n.getText("userpermissions.admin.copy.label")" class="button">
 	  </div>
+	  <div id="copyStatus">
+	  </div>
 	  <div id="results">
 	  </div>
 	</form>
