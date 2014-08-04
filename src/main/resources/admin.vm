@@ -19,7 +19,8 @@
 		<input type="text" id="usernameTo" name="usernameTo" class="text">
 	  </div>
 	  <div class="field-group">
-		<input type="submit" value="$i18n.getText("userpermissions.admin.copy.label")" class="button">
+		<input id="copyButton" type="submit" value="$i18n.getText("userpermissions.admin.copy.label")" class="button" style="display: none;">
+		<input id="viewButton" type="submit" value="$i18n.getText("userpermissions.admin.view.label")" class="button">
 	  </div>
 	  <div id="copyStatus">
 	  </div>

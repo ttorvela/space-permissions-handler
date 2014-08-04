@@ -61,38 +61,42 @@ function printHeader(permissions) {
 }
 
 function printPermissions(permissions) {
-	var $permissionResults = $("#results");
+	var html = "";
+	
 	
 	for (i = 0; i < permissions.spacePermissions.length; i++) {
-		$permissionResults.append('<tr>');
-		$permissionResults.append('<td>' + permissions.spacePermissions[i].spaceName + '</td>');
-		printPermissionStatus(permissions.spacePermissions[i].permissions.viewSpace, "viewspace");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.createPage, "createpage");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.exportPage, "exportpage");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.setPagePermissions, "setpagepermissions");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.removePage, "removepage");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.createBlogPost, "createblogpost");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.removeBlog, "removeblog");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.comment, "comment");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.removeComment, "removecomment");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.createAttachment, "createattachment");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.removeAttachment, "removeattachment");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.removeMail, "removemail");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.exportSpace, "exportspace");
-		printPermissionStatus(permissions.spacePermissions[i].permissions.editSpace, "editspace");
-		$permissionResults.append('</tr>');
+		if (i > 0 && i % 2 == 1) {
+			html += '<tr style=" background: #f0f0f0; ">';
+		} else {
+			html += '<tr>';
+		}
+		html += '<td>' + permissions.spacePermissions[i].spaceName + '</td>';
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.viewSpace, "viewspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createPage, "createpage");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportPage, "exportpage");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.setPagePermissions, "setpagepermissions");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removePage, "removepage");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createBlogPost, "createblogpost");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeBlog, "removeblog");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.comment, "comment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeComment, "removecomment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createAttachment, "createattachment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeAttachment, "removeattachment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeMail, "removemail");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportSpace, "exportspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions.editSpace, "editspace");
+		html += '</tr>';
 	}
 	
-	var html = "";
-	html += '</tr>';
+	
 	html += '</tbody>';
 	html += '</table>';
 	
+	var $permissionResults = $("#results");
 	$permissionResults.append(html);
 }
 
 function printPermissionStatus(status, permissionName) {
-	var $permissionResults = $("#results");
 	
 	var html = "";
 	html += '<td valign="middle" align="center" data-permission-set="' + status + '"';
@@ -100,29 +104,54 @@ function printPermissionStatus(status, permissionName) {
 	html += 'class="permissionCell"><img width="16" height="16"';
 	
 	if (status == true) {
-		html += 'src="/confluence/s/en_GB/3398/c7c65e1e0ae26ebdb7fdb329e831fd2c1a2ed938.1/_/images/icons/emoticons/check.png">';
+		html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">';
 	} else {
-		html += 'src="/confluence/s/en_GB/3398/c7c65e1e0ae26ebdb7fdb329e831fd2c1a2ed938.1/_/images/icons/emoticons/error.png">';
+		html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/error.png">';
 	}
 	
 	html += '</td>';
-	$permissionResults.append(html);
+	return html;
 }
 
 AJS.toInit(function() {
+	
+	//TODO: Get this working from a separate function!!!
+	AJS.$("#usernameTo").live('input paste',function() {
+		if (AJS.$("#viewButton").is(":visible") && AJS.$("#usernameTo").attr("value").length > 0 && AJS.$("#usernameFrom").attr("value").length > 0 ) {
+			AJS.$("#viewButton").hide();
+			AJS.$("#copyButton").show();
+		} else if (AJS.$("#copyButton").is(":visible") && (AJS.$("#usernameTo").attr("value").length == 0 || AJS.$("#usernameFrom").attr("value").length == 0 )) {
+			AJS.$("#copyButton").hide();
+			AJS.$("#viewButton").show();
+		}});
+	
+	AJS.$("#usernameFrom").live('input paste',function() {
+		if (AJS.$("#viewButton").is(":visible") && AJS.$("#usernameTo").attr("value").length > 0 && AJS.$("#usernameFrom").attr("value").length > 0 ) {
+			AJS.$("#viewButton").hide();
+			AJS.$("#copyButton").show();
+		} else if (AJS.$("#copyButton").is(":visible") && (AJS.$("#usernameTo").attr("value").length == 0 || AJS.$("#usernameFrom").attr("value").length == 0 )) {
+			AJS.$("#copyButton").hide();
+			AJS.$("#viewButton").show();
+		}});
+
 	AJS.$("#admin").submit(
 			function(e) {
 				e.preventDefault();
 
 				var promise = getPermissions();
 				promise.success(function(permissions) {
-					copyPermissions(permissions);
+					if (AJS.$("#usernameTo").attr("value").length > 0) {
+						copyPermissions(permissions);
+					} else {
+						var $permissionResults = $("#copyStatus");
+						$permissionResults.html('');
+					}
 					var $permissionResults = $("#results");
 					printHeader(permissions);
 					printPermissions(permissions);
-//					$permissionResults.append("<div><pre>"
-//							+ JSON.stringify(permissions, null, 4)
-//							+ "</pre></div>");
+					//					$permissionResults.append("<div><pre>"
+					//							+ JSON.stringify(permissions, null, 4)
+					//							+ "</pre></div>");
 				});
 			});
 });
