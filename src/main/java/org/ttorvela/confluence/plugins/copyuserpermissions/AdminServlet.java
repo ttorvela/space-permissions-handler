@@ -59,61 +59,6 @@ public class AdminServlet extends HttpServlet {
 		renderer.render("admin.vm", response.getWriter());
 	}
 
-	// @Override
-	// protected void doPost(HttpServletRequest req, HttpServletResponse
-	// response) throws ServletException, IOException {
-	// log.debug("doPost entered");
-	// ConfluenceUser userFrom =
-	// userAccessor.getUserByName(req.getParameter("usernameFrom"));
-	// ConfluenceUser userTo =
-	// userAccessor.getUserByName(req.getParameter("usernameTo"));
-	//
-	// List<Space> spaces = spaceManager.getAllSpaces();
-	//
-	// for (Space s : spaces) {
-	// if (permissionManager.hasPermission(userFrom, Permission.VIEW, s) ) {
-	// SpacePermission viewSpace =
-	// SpacePermission.createUserSpacePermission(Permission.VIEW.toString(), s,
-	// userTo);
-	// spacePermissionManager.savePermission(viewSpace);
-	// }
-	// }
-	//
-	// log.debug("doPost exiting");
-	//
-	// response.sendRedirect("test");
-	// }
-
-	// Handle submit button with Javascript 
-	/*
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response put(@Context HttpServletRequest req) {
-		String username = userManager.getRemoteUsername(req);
-		if (username == null || !userManager.isSystemAdmin(username)) {
-			return Response.status(Status.UNAUTHORIZED).build();
-		}
-
-		ConfluenceUser userFrom = userAccessor.getUserByName(req
-				.getParameter("usernameFrom"));
-		ConfluenceUser userTo = userAccessor.getUserByName(req
-				.getParameter("usernameTo"));
-
-		List<Space> spaces = spaceManager.getAllSpaces();
-
-		for (Space s : spaces) {
-			if (permissionManager.hasPermission(userFrom, Permission.VIEW, s)) {
-				SpacePermission viewSpace = SpacePermission
-						.createUserSpacePermission(Permission.VIEW.toString(),
-								s, userTo);
-				spacePermissionManager.savePermission(viewSpace);
-			}
-		}
-
-		return Response.noContent().build();
-	}
-	*/
-
 	private void redirectToLogin(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		response.sendRedirect(loginUriProvider.getLoginUri(getUri(request))
