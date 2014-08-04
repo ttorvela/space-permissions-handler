@@ -66,10 +66,16 @@ https://developer.atlassian.com/display/DOCS/Creating+a+Remote+Debug+Target
 Learn and use FastDev:
 https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+with+FastDev
 
-- Make changes to the source files and reload the changes with FastDev from development environment Confluence instance from browser. It will compile and deploy the result to the running Confluence. There is no need to restart Confluence. Javascript changes do not need to be redeployed. You will just need to reload the page.
+- Make changes to the source files and reload the changes with FastDev from development environment Confluence instance from browser. It will compile and deploy the result to the running Confluence. There is no need to restart Confluence. Javascript and Velocity changes do not need to be redeployed. You will just need to reload the page.
 
 CURRENT STATUS
 ==============
+
+4.8.2014
+--------
+
+Implemented a better UI to show permissions that were copied to the target user.
+Implemented UI to display one user's permissions. No copying would be done in this use case.
 
 30.7.2014
 ---------
@@ -86,5 +92,6 @@ There is no UI yet that would display wether the copying was successful or not!
 TODO
 ====
 
-1. Implement better UI to show permissions that were copied to the target user.
-2. Implement UI to display one user's permissions. No copying would be done in this use case.
+1. Fix TODOs from the code.
+2. Plugin screenshots.
+3. Detect same usernameTo and usernameFrom situation and show an error message.
