@@ -15,11 +15,12 @@ function copyPermissions(permissions) {
 		data : JSON.stringify(permissions),
 		processData : false,
 	}).fail(function() {
-		var $permissionResults = $("#copyStatus");
-		$permissionResults.html('<h2>Copy operation failed</h2>');
+		var $copyStatus = $("#copyStatus");
+		$copyStatus.html('<h2>Copy operation failed</h2>');
+		$("#results").html('');
 	 }).success(function () {
-		var $permissionResults = $("#copyStatus");
-		$permissionResults.html('<h2>Copy operation was successful</h2>');
+		var $copyStatus = $("#copyStatus");
+		$copyStatus.html('<h2>Copy operation was successful</h2>');
      });
 }
 
@@ -137,21 +138,27 @@ AJS.toInit(function() {
 	AJS.$("#admin").submit(
 			function(e) {
 				e.preventDefault();
-
-				var promise = getPermissions();
-				promise.success(function(permissions) {
-					if (AJS.$("#usernameTo").attr("value").length > 0) {
-						copyPermissions(permissions);
-					} else {
-						var $permissionResults = $("#copyStatus");
-						$permissionResults.html('');
-					}
-					var $permissionResults = $("#results");
-					printHeader(permissions);
-					printPermissions(permissions);
-					//					$permissionResults.append("<div><pre>"
-					//							+ JSON.stringify(permissions, null, 4)
-					//							+ "</pre></div>");
-				});
+				var $permissionResults = $("#results");
+				$permissionResults.html('');
+				if (AJS.$("#usernameFrom").attr("value") == AJS.$("#usernameTo").attr("value") ) {
+					var $copyStatus = $("#copyStatus");
+					$copyStatus.html('<h2>Operation failed. Same usernames.</h2>');	
+				} else if (AJS.$("#usernameFrom").attr("value").length > 0) {
+					var promise = getPermissions();
+					promise.success(function(permissions) {
+						if (AJS.$("#usernameTo").attr("value").length > 0) {
+							copyPermissions(permissions);
+						} else {
+							var $copyStatus= $("#copyStatus");
+							$copyStatus.html('');
+						}
+						printHeader(permissions);
+						printPermissions(permissions);
+					});
+					promise.fail(function(permissions) {
+						var $copyStatus = $("#copyStatus");
+						$copyStatus.html('<h2>Operation failed. User not found?</h2>');
+					});
+				}
 			});
 });

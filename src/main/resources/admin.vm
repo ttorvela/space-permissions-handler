@@ -12,11 +12,11 @@
     <form id="admin" class="aui">
 	  <div class="field-group">
 		<label for="usernameFrom">$i18n.getText("userpermissions.admin.username.from.label")</label>
-		<input type="text" id="usernameFrom" name="usernameFrom" class="text">
+		<input type="text" id="usernameFrom" name="usernameFrom" class="autocomplete-user" data-none-message="No users found" data-template="{username}">
 	  </div>
 	  <div class="field-group">
 		<label for="usernameTo">$i18n.getText("userpermissions.admin.username.to.label")</label>
-		<input type="text" id="usernameTo" name="usernameTo" class="text">
+		<input type="text" id="usernameTo" name="usernameTo" class="autocomplete-user" data-none-message="No users found" data-template="{username}">
 	  </div>
 	  <div class="field-group">
 		<input id="copyButton" type="submit" value="$i18n.getText("userpermissions.admin.copy.label")" class="button" style="display: none;">

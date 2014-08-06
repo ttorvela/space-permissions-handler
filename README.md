@@ -71,6 +71,14 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+6.8.2014
+--------
+
+Branch 4.3.7 is starting to look good. Changes from that should be merged to master branch for latest Confluence version.
+
+Added: Auto complete for username fields.
+Fixed: Several error situations and error handling on UI and service levels.
+
 4.8.2014
 --------
 
@@ -94,4 +102,4 @@ TODO
 
 1. Fix TODOs from the code.
 2. Plugin screenshots.
-3. Detect same usernameTo and usernameFrom situation and show an error message.
+3. Merge 4.3.7 changes to the master branch.

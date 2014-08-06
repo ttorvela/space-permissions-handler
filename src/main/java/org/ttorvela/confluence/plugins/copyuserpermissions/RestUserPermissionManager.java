@@ -25,53 +25,63 @@ public class RestUserPermissionManager {
 
 	@SuppressWarnings("deprecation")
 	public UserPermissionsEntity getPermissionsEntity(String username) {
-		List<Space> spaces = spaceManager.getAllSpaces();
-		List<SpacePermissionsEntity> spacePermissions = new ArrayList<SpacePermissionsEntity>();
+		UserPermissionsEntity entity = null;
 
-		SpacePermissionsEntity spacePermissionsEntity;
+		if (userAccessor.getUser(username) != null) {
+			List<Space> spaces = spaceManager.getAllSpaces();
+			List<SpacePermissionsEntity> spacePermissions = new ArrayList<SpacePermissionsEntity>();
 
-		for (Space s : spaces) {
-			spacePermissionsEntity = new SpacePermissionsEntity(s.getName(),
-					s.getKey());
+			SpacePermissionsEntity spacePermissionsEntity;
 
-			setUserSpacePermissionEntity(spacePermissionsEntity, username,
-					SpacePermission.VIEWSPACE_PERMISSION, s);
+			for (Space s : spaces) {
+				spacePermissionsEntity = new SpacePermissionsEntity(
+						s.getName(), s.getKey());
 
-			if (spacePermissionsEntity
-					.getPermissionStatus(SpacePermission.VIEWSPACE_PERMISSION)) {
 				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.EXPORT_PAGE_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.CREATEEDIT_PAGE_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.REMOVE_PAGE_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.EDITBLOG_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.REMOVE_BLOG_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.COMMENT_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.REMOVE_COMMENT_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.CREATE_ATTACHMENT_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.REMOVE_ATTACHMENT_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.REMOVE_MAIL_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.EXPORT_SPACE_PERMISSION, s);
-				setUserSpacePermissionEntity(spacePermissionsEntity, username,
-						SpacePermission.ADMINISTER_SPACE_PERMISSION, s);
+						SpacePermission.VIEWSPACE_PERMISSION, s);
 
-				spacePermissions.add(spacePermissionsEntity);
+				if (spacePermissionsEntity
+						.getPermissionStatus(SpacePermission.VIEWSPACE_PERMISSION)) {
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.EXPORT_PAGE_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.CREATEEDIT_PAGE_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.REMOVE_PAGE_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.EDITBLOG_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.REMOVE_BLOG_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.COMMENT_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.REMOVE_COMMENT_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.CREATE_ATTACHMENT_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.REMOVE_ATTACHMENT_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.REMOVE_MAIL_PERMISSION, s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username, SpacePermission.EXPORT_SPACE_PERMISSION,
+							s);
+					setUserSpacePermissionEntity(spacePermissionsEntity,
+							username,
+							SpacePermission.ADMINISTER_SPACE_PERMISSION, s);
+
+					spacePermissions.add(spacePermissionsEntity);
+				}
 			}
-		}
 
-		UserPermissionsEntity entity = new UserPermissionsEntity(
-				spacePermissions);
+			entity = new UserPermissionsEntity(spacePermissions);
+		}
 
 		return entity;
 	}
@@ -79,9 +89,11 @@ public class RestUserPermissionManager {
 	@SuppressWarnings("deprecation")
 	public void setPermissions(String targetUserName,
 			UserPermissionsEntity userPermissionsEntity) {
-		//ConfluenceUser targetUserName = userAccessor.getUserByName(targetUserName);
+		// ConfluenceUser targetUserName =
+		// userAccessor.getUserByName(targetUserName);
 
-		List<SpacePermissionsEntity> spacePermissions = userPermissionsEntity.getSpacePermissions();
+		List<SpacePermissionsEntity> spacePermissions = userPermissionsEntity
+				.getSpacePermissions();
 
 		for (SpacePermissionsEntity spe : spacePermissions) {
 			if (spe.getPermissionStatus(SpacePermission.VIEWSPACE_PERMISSION)) {
@@ -137,7 +149,8 @@ public class RestUserPermissionManager {
 		if (spacePermissionsEntity.getPermissionStatus(spacePermissionType)) {
 			@SuppressWarnings("deprecation")
 			SpacePermission spacePermission = SpacePermission
-					.createUserSpacePermission(spacePermissionType, space, username);
+					.createUserSpacePermission(spacePermissionType, space,
+							username);
 			spacePermissionManager.savePermission(spacePermission);
 		}
 	}

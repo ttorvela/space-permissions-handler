@@ -26,6 +26,7 @@ import com.atlassian.sal.api.user.UserManager;
 public class UserPermissionsResource {
 	private final UserManager userManager;
 	private final TransactionTemplate transactionTemplate;
+	private final UserAccessor userAccessor;
 
 	private RestUserPermissionManager restUserPermissionManager;
 
@@ -35,6 +36,7 @@ public class UserPermissionsResource {
 			UserAccessor userAccessor, PermissionManager permissionManager) {
 		this.userManager = userManager;
 		this.transactionTemplate = transactionTemplate;
+		this.userAccessor = userAccessor;
 		this.restUserPermissionManager = new RestUserPermissionManager(
 				spaceManager, spacePermissionManager, userAccessor); // ,
 																		// permissionManager);
@@ -67,6 +69,10 @@ public class UserPermissionsResource {
 		String username = userManager.getRemoteUsername(request);
 		if (username == null || !userManager.isSystemAdmin(username)) {
 			return Response.status(Status.UNAUTHORIZED).build();
+		}
+		
+		if (userAccessor.getUser(targetUsername) == null) {
+			return Response.status(Status.NOT_FOUND).build();
 		}
 
 		transactionTemplate.execute(new TransactionCallback() {
