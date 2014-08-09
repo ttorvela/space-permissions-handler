@@ -6,7 +6,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ttorvela.confluence.plugins</groupId>
-    <artifactId>confluence-copy-user-permissions</artifactId>
+    <artifactId>space-permissions-handler</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <organization>
@@ -14,8 +14,8 @@
         <url>https://twitter.com/thimei</url>
     </organization>
 
-    <name>Confluence Copy User Permissions</name>
-    <description>Copies Confluence user's permissions to another user.</description>
+    <name>Space Permissions Handler for Confluence</name>
+    <description>View and copy Confluence user's permissions.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>

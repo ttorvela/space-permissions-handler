@@ -1,4 +1,4 @@
-package org.ttorvela.confluence.plugins.copyuserpermissions;
+package org.ttorvela.confluence.plugins.spacepermissionshandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;

@@ -1,7 +1,7 @@
-Copy user permissions Confluence plug-in
+Space Permissions Handler for Confluence
 ========================================
 
-Purpose of this plug-in is to provide admin UI to copy Confluence user's space permissions to another Confluence user. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
+Purpose of this plug-in is to provide admin UI to view and copy Confluence user's space permissions to another Confluence user. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
 
 REST-API
 --------
@@ -71,6 +71,11 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+9.8.2014
+--------
+
+Plugin will be renamed to Space Permissions Handler for Confluence
+
 6.8.2014
 --------
 
@@ -103,3 +108,4 @@ TODO
 1. Fix TODOs from the code.
 2. Plugin screenshots.
 3. Merge 4.3.7 changes to the master branch.
+4. Finish renaming to Space Permissions Handler for Confluence

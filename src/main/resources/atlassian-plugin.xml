@@ -8,18 +8,18 @@
     </plugin-info>
 
     <!-- add our i18n resource -->
-    <resource type="i18n" name="i18n" location="confluence-copy-user-permissions"/>
+    <resource type="i18n" name="i18n" location="spacepermissionshandler"/>
     
     <!-- add our web resources -->
-    <web-resource key="resources" name="confluence-copy-user-permissions Web Resources">
+    <web-resource key="resources" name="spacepermissionshandler Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         
-        <resource type="download" name="confluence-copy-user-permissions.css" location="/css/confluence-copy-user-permissions.css"/>
-        <resource type="download" name="confluence-copy-user-permissions.js" location="/js/confluence-copy-user-permissions.js"/>
+        <resource type="download" name="spacepermissionshandler.css" location="/css/spacepermissionshandler.css"/>
+        <resource type="download" name="spacepermissionshandler.js" location="/js/spacepermissionshandler.js"/>
 		<resource type="download" name="admin.js" location="/js/admin.js"/> 
         <resource type="download" name="images/" location="/images"/>
 
-        <context>confluence-copy-user-permissions</context>
+        <context>spacepermissionshandler</context>
     </web-resource>
 
     <!-- import from the product container -->
@@ -38,20 +38,20 @@
 	<component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />
 	 
 	<rest key="rest" path="/userpermissions" version="1.0">
-	  <description>Provides REST resources for the user permissions UI.</description>
+	  <description>Provides REST resources for the Space Permissions Handler UI.</description>
 	</rest>
 	
-	<servlet key="admin-servlet" class="org.ttorvela.confluence.plugins.copyuserpermissions.AdminServlet">
-	  <url-pattern>/userpermissions/admin</url-pattern>
+	<servlet key="admin-servlet" class="org.ttorvela.confluence.plugins.spacepermissionshandler.AdminServlet">
+	  <url-pattern>/spacepermissionshandler/admin</url-pattern>
 	</servlet>
 	
 	<template-context-item key="applicationPropertiesContextItem" component-ref="applicationProperties"
 context-key="applicationProperties" name="Application Properties Context Item"/> 
 
-	<web-item key="conf-menu-item" name="User Permissions" section="system.admin/configuration" weight="10">
-	  <description>Link to User Permissions admin page.</description>
-	  <label key="userpermissions.admin.label" />
-	  <link linkId="userpermissions-link">/plugins/servlet/userpermissions/admin</link>
+	<web-item key="conf-menu-item" name="Space Permissions Handler" section="system.admin/configuration" weight="10">
+	  <description>Link to Space Permissions Handler admin page.</description>
+	  <label key="spacepermissionshandler.admin.label" />
+	  <link linkId="spacepermissionshandler-admin-link">/plugins/servlet/spacepermissionshandler/admin</link>
 	</web-item> 
     
 </atlassian-plugin>
