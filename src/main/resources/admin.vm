@@ -2,7 +2,7 @@
   <head>
     <title>$i18n.getText("spacepermissionshandler.admin.label")</title>
 	<meta name="decorator" content="atl.admin">
-	$webResourceManager.requireResource("org.ttorvela.confluence.plugins.spacepermissionshandler:resources")
+	$webResourceManager.requireResource("org.ttorvela.confluence.plugins.space-permissions-handler:resources")
 	<meta name="application-base-url" content="$applicationProperties.getBaseUrl()">
   </head>
   <body>

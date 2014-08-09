@@ -5,21 +5,21 @@
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
         <param name="plugin-icon">images/pluginIcon.png</param>
         <param name="plugin-logo">images/pluginLogo.png</param>
+		<param name="plugin-banner">images/permissions_copied.png</param>
     </plugin-info>
 
     <!-- add our i18n resource -->
     <resource type="i18n" name="i18n" location="spacepermissionshandler"/>
     
     <!-- add our web resources -->
-    <web-resource key="resources" name="spacepermissionshandler Web Resources">
+    <web-resource key="resources" name="space-permissions-handler Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         
         <resource type="download" name="spacepermissionshandler.css" location="/css/spacepermissionshandler.css"/>
-        <resource type="download" name="spacepermissionshandler.js" location="/js/spacepermissionshandler.js"/>
 		<resource type="download" name="admin.js" location="/js/admin.js"/> 
         <resource type="download" name="images/" location="/images"/>
 
-        <context>spacepermissionshandler</context>
+        <context>space-permissions-handler</context>
     </web-resource>
 
     <!-- import from the product container -->
@@ -51,7 +51,7 @@ context-key="applicationProperties" name="Application Properties Context Item"/>
 	<web-item key="conf-menu-item" name="Space Permissions Handler" section="system.admin/configuration" weight="10">
 	  <description>Link to Space Permissions Handler admin page.</description>
 	  <label key="spacepermissionshandler.admin.label" />
-	  <link linkId="spacepermissionshandler-admin-link">/plugins/servlet/spacepermissionshandler/admin</link>
+	  <link linkId="space-permissions-handler-admin-link">/plugins/servlet/spacepermissionshandler/admin</link>
 	</web-item> 
     
 </atlassian-plugin>
