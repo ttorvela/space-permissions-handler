@@ -29,10 +29,11 @@ function printHeader(permissions) {
 	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.$("#usernameFrom").attr("value") + "'s permissions in " + permissions.spacePermissions.length + " spaces" + "</h2>");
 
 	var html = "";
+	html += '<table width="100%" cellspacing="0" cellpadding="2" border="0" class="permissions aui" id="uPermissionsTable">';
 	html += '<tbody>';
 	html += '<tr>';
 	html += '<th width="25%" class="permissionHeading">&nbsp;</th>';
-	html += '<th class="permissionHeading">&nbsp;</th>';
+	html += '<th class="permissionHeading">All</th>';
 	html += '<th class="permissionSuperTab" colspan="4">Pages</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Blog</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Comments</th>';
@@ -43,22 +44,22 @@ function printHeader(permissions) {
 	html += '<tr>';
 	html += '<th class="permissionHeading">Space name</th>';
 	html += '<th width="40" class="permissionSuperTab">View</th>';
-	html += '<th width="40" class="permissionTab">Add</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
 	html += '<th width="40" class="permissionTab">Export</th>';
 	html += '<th width="40" class="permissionTab">Restrict</th>';
 	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab">Add</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
 	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab">Add</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
 	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab">Add</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
 	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab">Export</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Remove</th>';
+	html += '<th width="40" class="permissionTab permissions-group-start">Export</th>';
 	html += '<th width="40" class="permissionTab">Admin</th>';
 	html += '</tr>';
 
-	$permissionResults.append(html);
+	return html;
 }
 
 function printPermissions(permissions) {
@@ -67,9 +68,9 @@ function printPermissions(permissions) {
 	
 	for (i = 0; i < permissions.spacePermissions.length; i++) {
 		if (i > 0 && i % 2 == 1) {
-			html += '<tr style=" background: #f0f0f0; ">';
+			html += '<tr style=" background: #f0f0f0; " "space-permission-row">';
 		} else {
-			html += '<tr>';
+			html += '<tr "space-permission-row">';
 		}
 		html += '<td>' + permissions.spacePermissions[i].spaceName + '</td>';
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.viewSpace, "viewspace");
@@ -93,16 +94,25 @@ function printPermissions(permissions) {
 	html += '</tbody>';
 	html += '</table>';
 	
-	var $permissionResults = $("#results");
-	$permissionResults.append(html);
+	return html;
 }
 
 function printPermissionStatus(status, permissionName) {
-	
 	var html = "";
 	html += '<td valign="middle" align="center" data-permission-set="' + status + '"';
 	html += 'data-permission-group="" data-permission="' + permissionName + '"';
-	html += 'class="permissionCell"><img width="16" height="16"';
+	html += 'class="permissionCell ';
+	
+	if (permissionName == "createpage" 
+		|| permissionName == "createblogpost" 
+			|| permissionName == "comment" 
+				|| permissionName == "createattachment" 
+					|| permissionName == "removemail" 
+						|| permissionName == "exportspace") {
+		html += 'permissions-group-start';
+	}
+
+	html += '"><img width="16" height="16" align="absmiddle" border="0" ';
 	
 	if (status == true) {
 		html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">';
@@ -152,8 +162,12 @@ AJS.toInit(function() {
 							var $copyStatus= $("#copyStatus");
 							$copyStatus.html('');
 						}
-						printHeader(permissions);
-						printPermissions(permissions);
+						var html = printHeader(permissions);
+						html += printPermissions(permissions);
+						
+						var $permissionResults = $("#results");
+						$permissionResults.append(html);
+						
 					});
 					promise.fail(function(permissions) {
 						var $copyStatus = $("#copyStatus");

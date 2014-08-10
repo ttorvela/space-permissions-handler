@@ -96,36 +96,62 @@ public class RestUserPermissionManager {
 				.getSpacePermissions();
 
 		for (SpacePermissionsEntity spe : spacePermissions) {
+			boolean granted = false;
+
 			if (spe.getPermissionStatus(SpacePermission.VIEWSPACE_PERMISSION)) {
 				Space space = spaceManager.getSpace(spe.getSpaceKey());
-				setSpacePermissionForUser(spe, targetUserName,
+
+				granted = setSpacePermissionForUser(spe, targetUserName,
 						SpacePermission.VIEWSPACE_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.EXPORT_PAGE_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.CREATEEDIT_PAGE_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.REMOVE_PAGE_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.EDITBLOG_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.REMOVE_BLOG_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.COMMENT_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.REMOVE_COMMENT_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.CREATE_ATTACHMENT_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.REMOVE_ATTACHMENT_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.REMOVE_MAIL_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.EXPORT_SPACE_PERMISSION, space);
-				setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.ADMINISTER_SPACE_PERMISSION, space);
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.EXPORT_PAGE_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.CREATEEDIT_PAGE_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.REMOVE_PAGE_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.EDITBLOG_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.REMOVE_BLOG_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.COMMENT_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.REMOVE_COMMENT_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.CREATE_ATTACHMENT_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.REMOVE_ATTACHMENT_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.REMOVE_MAIL_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.EXPORT_SPACE_PERMISSION, space) ? true
+						: granted;
+				granted = setSpacePermissionForUser(spe, targetUserName,
+						SpacePermission.ADMINISTER_SPACE_PERMISSION, space) ? true
+						: granted;
+				
+				if (granted) {
+					// Need to set the view permission individually
+					// if some other permission was added.
+					SpacePermission spacePermission = SpacePermission
+							.createUserSpacePermission(
+									SpacePermission.VIEWSPACE_PERMISSION,
+									space, targetUserName);
+					spacePermissionManager.savePermission(spacePermission);
+				}
 			}
 		}
 	}
@@ -142,17 +168,24 @@ public class RestUserPermissionManager {
 		}
 	}
 
-	private void setSpacePermissionForUser(
+	private boolean setSpacePermissionForUser(
 			SpacePermissionsEntity spacePermissionsEntity, String username,
 			String spacePermissionType, Space space) {
 
-		if (spacePermissionsEntity.getPermissionStatus(spacePermissionType)) {
+		boolean granted = false;
+
+		if (spacePermissionsEntity.getPermissionStatus(spacePermissionType)
+				&& !spacePermissionManager.hasPermission(spacePermissionType,
+						space, userAccessor.getUser(username))) {
 			@SuppressWarnings("deprecation")
 			SpacePermission spacePermission = SpacePermission
 					.createUserSpacePermission(spacePermissionType, space,
 							username);
 			spacePermissionManager.savePermission(spacePermission);
+			granted = true;
 		}
+
+		return granted;
 	}
 
 }

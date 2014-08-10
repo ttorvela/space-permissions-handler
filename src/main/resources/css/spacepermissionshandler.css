@@ -1,0 +1,64 @@
+table.aui {
+    border-collapse: collapse;
+    width: 100%;
+}
+table.aui table.aui {
+    margin: 0;
+}
+table.aui > caption {
+    background: none repeat scroll 0 0 #f5f5f5;
+    border-bottom: 1px solid #ccc;
+    caption-side: top;
+    color: #707070;
+    padding: 7px 10px;
+    text-align: left;
+}
+table.aui > tbody > tr, table.aui > tfoot > tr {
+    background: none repeat scroll 0 0 #fff;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+table.aui > tbody > tr > th {
+    background: none repeat scroll 0 0 #fff;
+    color: #333;
+}
+table.aui > thead > tr > th, table.aui > tbody > tr > th, table.aui > thead > tr > td, table.aui > tbody > tr > td, table.aui > tfoot > tr > td {
+    padding: 7px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+table.aui > thead {
+    border-bottom: 1px solid #ccc;
+}
+table.aui > tbody > tr:first-child > td, table.aui > tbody > tr:first-child > th, table.aui > tfoot > tr:first-child > td {
+    border-top: 1px solid #ccc;
+}
+table.aui > thead > tr > th > ul.menu, table.aui > tbody > tr > th > ul.menu, table.aui > tbody > tr > td > ul.menu, table.aui > tfoot > tr > td > ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+table.aui > thead > tr > th > ul.menu > li, table.aui > tbody > tr > th > ul.menu > li, table.aui > tbody > tr > td > ul.menu > li, table.aui > tfoot > tr > td > ul.menu > li {
+    float: left;
+    margin: 0 10px 0 0;
+    width: auto;
+}
+
+.permissions tr:nth-child(2) th {
+    font-weight: normal;
+}
+.permissions tr:nth-child(2n) {
+    background: none repeat scroll 0 0 #f5f5f5;
+}
+.permissions tr td:first-child {
+    width: 100%;
+}
+.permissions .permissions-group-start {
+    border-left: 1px solid #ccc;
+}
+.permissions .permissionCell {
+    text-align: center;
+}
+.permissions .dropdown-perm-actions {
+    padding: 3px;
+}
