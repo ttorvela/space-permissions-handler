@@ -8,6 +8,7 @@
   <body>
     <script type="text/javascript">
       var baseUrl = "$applicationProperties.getBaseUrl()";
+	  var versionNumber = "$applicationProperties.getVersion()";
     </script>
     <form id="admin" class="aui">
 	  <div class="field-group">

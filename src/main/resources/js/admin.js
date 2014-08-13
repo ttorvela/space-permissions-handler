@@ -29,11 +29,20 @@ function printHeader(permissions) {
 	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.$("#usernameFrom").attr("value") + "'s permissions in " + permissions.spacePermissions.length + " spaces" + "</h2>");
 
 	var html = "";
-	html += '<table width="100%" cellspacing="0" cellpadding="2" border="0" class="permissions aui" id="uPermissionsTable">';
+	var ver5 = versionNumber.substring(0, 1) == "5";
+	
+	html += '<table id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">';
 	html += '<tbody>';
 	html += '<tr>';
 	html += '<th width="25%" class="permissionHeading">&nbsp;</th>';
-	html += '<th class="permissionHeading">All</th>';
+		
+	
+	if (ver5) {
+		html += '<th class="permissionHeading">All</th>';
+	} else {
+		html += '<th class="permissionHeading">&nbsp;</th>';
+	}
+	
 	html += '<th class="permissionSuperTab" colspan="4">Pages</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Blog</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Comments</th>';
@@ -44,19 +53,36 @@ function printHeader(permissions) {
 	html += '<tr>';
 	html += '<th class="permissionHeading">Space name</th>';
 	html += '<th width="40" class="permissionSuperTab">View</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-	html += '<th width="40" class="permissionTab">Export</th>';
-	html += '<th width="40" class="permissionTab">Restrict</th>';
-	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-	html += '<th width="40" class="permissionTab">Remove</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Remove</th>';
-	html += '<th width="40" class="permissionTab permissions-group-start">Export</th>';
-	html += '<th width="40" class="permissionTab">Admin</th>';
+	
+	if (ver5) {
+		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
+		html += '<th width="40" class="permissionTab">Restrict</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab permissions-group-start">Remove</th>';
+		html += '<th width="40" class="permissionTab permissions-group-start">Export</th>';
+		html += '<th width="40" class="permissionTab">Admin</th>';
+	} else {
+		html += '<th width="40" class="permissionTab">Add</th>';
+		html += '<th width="40" class="permissionTab">Export</th>';
+		html += '<th width="40" class="permissionTab">Restrict</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab">Add</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab">Remove</th>';
+		html += '<th width="40" class="permissionTab">Export</th>';
+		html += '<th width="40" class="permissionTab">Admin</th>';
+	}
+	
 	html += '</tr>';
 
 	return html;
@@ -64,7 +90,7 @@ function printHeader(permissions) {
 
 function printPermissions(permissions) {
 	var html = "";
-	
+	var ver5 = versionNumber.substring(0, 1) == "5";
 	
 	for (i = 0; i < permissions.spacePermissions.length; i++) {
 		if (i > 0 && i % 2 == 1) {
@@ -72,10 +98,16 @@ function printPermissions(permissions) {
 		} else {
 			html += '<tr "space-permission-row">';
 		}
-		html += '<td>' + permissions.spacePermissions[i].spaceName + '</td>';
+		html += '<td> <a title="' + permissions.spacePermissions[i].spaceName
+			+ '" href="/confluence/spaces/spacepermissions.action?key='
+			+ permissions.spacePermissions[i].spaceKey + '">' 
+			+ permissions.spacePermissions[i].spaceName + '</a>' + '</td>';
+
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.viewSpace, "viewspace");
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createPage, "createpage");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportPage, "exportpage");
+		if (!ver5) {
+			html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportPage, "exportpage");
+		}
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.setPagePermissions, "setpagepermissions");
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removePage, "removepage");
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createBlogPost, "createblogpost");
@@ -98,35 +130,41 @@ function printPermissions(permissions) {
 }
 
 function printPermissionStatus(status, permissionName) {
+	var ver5 = versionNumber.substring(0, 1) == "5";
+
 	var html = "";
-	html += '<td valign="middle" align="center" data-permission-set="' + status + '"';
-	html += 'data-permission-group="" data-permission="' + permissionName + '"';
-	html += 'class="permissionCell ';
 	
-	if (permissionName == "createpage" 
-		|| permissionName == "createblogpost" 
-			|| permissionName == "comment" 
-				|| permissionName == "createattachment" 
-					|| permissionName == "removemail" 
-						|| permissionName == "exportspace") {
-		html += 'permissions-group-start';
+	if (permissionName == "exportPage" && ver5) {
+		html = "";
+	} else {
+		html += '<td valign="middle" align="center" data-permission-set="' + status + '"';
+		html += 'data-permission-group="" data-permission="' + permissionName + '"';
+		html += 'class="permissionCell ';
+		
+		if (permissionName == "createpage" 
+			|| permissionName == "createblogpost" 
+				|| permissionName == "comment" 
+					|| permissionName == "createattachment" 
+						|| permissionName == "removemail" 
+							|| permissionName == "exportspace") {
+			html += 'permissions-group-start';
+		}
+
+		html += '"><img width="16" height="16" align="absmiddle" border="0" ';
+		
+		if (status == true) {
+			html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">';
+		} else {
+			html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/error.png">';
+		}
+		
+		html += '</td>';
 	}
 
-	html += '"><img width="16" height="16" align="absmiddle" border="0" ';
-	
-	if (status == true) {
-		html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">';
-	} else {
-		html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/error.png">';
-	}
-	
-	html += '</td>';
 	return html;
 }
 
 AJS.toInit(function() {
-	
-	//TODO: Get this working from a separate function!!!
 	AJS.$("#usernameTo").live('input paste',function() {
 		if (AJS.$("#viewButton").is(":visible") && AJS.$("#usernameTo").attr("value").length > 0 && AJS.$("#usernameFrom").attr("value").length > 0 ) {
 			AJS.$("#viewButton").hide();
