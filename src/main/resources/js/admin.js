@@ -31,7 +31,12 @@ function printHeader(permissions) {
 	var html = "";
 	var ver5 = versionNumber.substring(0, 1) == "5";
 	
-	html += '<table id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">';
+	if (ver5) {
+		html += '<table class="permissions aui" id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">';
+	} else {
+		html += '<table id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">';
+	}
+
 	html += '<tbody>';
 	html += '<tr>';
 	html += '<th width="25%" class="permissionHeading">&nbsp;</th>';
@@ -39,11 +44,13 @@ function printHeader(permissions) {
 	
 	if (ver5) {
 		html += '<th class="permissionHeading">All</th>';
+		html += '<th class="permissionSuperTab" colspan="3">Pages</th>';
 	} else {
 		html += '<th class="permissionHeading">&nbsp;</th>';
+		html += '<th class="permissionSuperTab" colspan="4">Pages</th>';
 	}
 	
-	html += '<th class="permissionSuperTab" colspan="4">Pages</th>';
+	
 	html += '<th class="permissionSuperTab" colspan="2">Blog</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Comments</th>';
 	html += '<th class="permissionSuperTab" colspan="2">Attachments</th>';
@@ -55,18 +62,18 @@ function printHeader(permissions) {
 	html += '<th width="40" class="permissionSuperTab">View</th>';
 	
 	if (ver5) {
-		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-		html += '<th width="40" class="permissionTab">Restrict</th>';
-		html += '<th width="40" class="permissionTab">Remove</th>';
-		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-		html += '<th width="40" class="permissionTab">Remove</th>';
-		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-		html += '<th width="40" class="permissionTab">Remove</th>';
-		html += '<th width="40" class="permissionTab permissions-group-start">Add</th>';
-		html += '<th width="40" class="permissionTab">Remove</th>';
-		html += '<th width="40" class="permissionTab permissions-group-start">Remove</th>';
-		html += '<th width="40" class="permissionTab permissions-group-start">Export</th>';
-		html += '<th width="40" class="permissionTab">Admin</th>';
+		html += '<th width="40" class="permissions-group-start">Add</th>';
+		html += '<th width="40">Restrict</th>';
+		html += '<th width="40">Delete</th>';
+		html += '<th width="40" class="permissions-group-start">Add</th>';
+		html += '<th width="40">Delete</th>';
+		html += '<th width="40" class="permissions-group-start">Add</th>';
+		html += '<th width="40">Delete</th>';
+		html += '<th width="40" class="permissions-group-start">Add</th>';
+		html += '<th width="40">Delete</th>';
+		html += '<th width="40" class="permissions-group-start">Delete</th>';
+		html += '<th width="40" class="permissions-group-start">Export</th>';
+		html += '<th width="40">Admin</th>';
 	} else {
 		html += '<th width="40" class="permissionTab">Add</th>';
 		html += '<th width="40" class="permissionTab">Export</th>';
@@ -94,9 +101,9 @@ function printPermissions(permissions) {
 	
 	for (i = 0; i < permissions.spacePermissions.length; i++) {
 		if (i > 0 && i % 2 == 1) {
-			html += '<tr style=" background: #f0f0f0; " "space-permission-row">';
+			html += '<tr style=" background: #f0f0f0; " class="space-permission-row">';
 		} else {
-			html += '<tr "space-permission-row">';
+			html += '<tr class="space-permission-row">';
 		}
 		html += '<td> <a title="' + permissions.spacePermissions[i].spaceName
 			+ '" href="/confluence/spaces/spacepermissions.action?key='
