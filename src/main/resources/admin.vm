@@ -27,6 +27,7 @@
 	  </div>
 	  <div id="results">
 	  </div>
+	  <div id="throbber" class="hidden"></div>
 	</form>
   </body>
 </html>

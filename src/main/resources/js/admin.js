@@ -171,6 +171,11 @@ function printPermissionStatus(status, permissionName) {
 	return html;
 }
 
+function showSpinner() {
+	killSpinner = Raphael.spinner("throbber", 60, "#666");
+	$("#throbber").removeClass("hidden");
+}
+
 AJS.toInit(function() {
 	AJS.$("#usernameTo").live('input paste',function() {
 		if (AJS.$("#viewButton").is(":visible") && AJS.$("#usernameTo").attr("value").length > 0 && AJS.$("#usernameFrom").attr("value").length > 0 ) {
@@ -193,12 +198,19 @@ AJS.toInit(function() {
 	AJS.$("#admin").submit(
 			function(e) {
 				e.preventDefault();
+				
 				var $permissionResults = $("#results");
 				$permissionResults.html('');
-				if (AJS.$("#usernameFrom").attr("value") == AJS.$("#usernameTo").attr("value") ) {
+				if (AJS.$("#usernameFrom").attr("value").length == 0) {
+					var $copyStatus = $("#copyStatus");
+					$copyStatus.html('<h2>Operation failed. From username is empty.</h2>');
+				} else if (AJS.$("#usernameFrom").attr("value") == AJS.$("#usernameTo").attr("value") ) {
 					var $copyStatus = $("#copyStatus");
 					$copyStatus.html('<h2>Operation failed. Same usernames.</h2>');	
 				} else if (AJS.$("#usernameFrom").attr("value").length > 0) {
+					$("#throbber").html('');
+					var t = setTimeout("showSpinner()", 100);
+					
 					var promise = getPermissions();
 					promise.success(function(permissions) {
 						if (AJS.$("#usernameTo").attr("value").length > 0) {
@@ -217,6 +229,11 @@ AJS.toInit(function() {
 					promise.fail(function(permissions) {
 						var $copyStatus = $("#copyStatus");
 						$copyStatus.html('<h2>Operation failed. User not found?</h2>');
+					});
+					promise.complete(function() {
+						clearTimeout(t);
+						killSpinner();
+						$throbber.addClass("hidden");
 					});
 				}
 			});
