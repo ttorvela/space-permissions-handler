@@ -1,3 +1,5 @@
+
+
 function getPermissions() {
 	return AJS.$.ajax({
 		url : baseUrl + "/rest/userpermissions/1.0/"
@@ -110,22 +112,24 @@ function printPermissions(permissions) {
 			+ permissions.spacePermissions[i].spaceKey + '">' 
 			+ permissions.spacePermissions[i].spaceName + '</a>' + '</td>';
 
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.viewSpace, "viewspace");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createPage, "createpage");
+		//TODO: Add a symbol if the permission is not user permission
+		
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[0].permissionGranted, "viewspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[1].permissionGranted, "createpage");
 		if (!ver5) {
-			html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportPage, "exportpage");
+			html += printPermissionStatus(permissions.spacePermissions[i].permissions[2].permissionGranted, "exportpage");
 		}
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.setPagePermissions, "setpagepermissions");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removePage, "removepage");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createBlogPost, "createblogpost");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeBlog, "removeblog");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.comment, "comment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeComment, "removecomment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.createAttachment, "createattachment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeAttachment, "removeattachment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.removeMail, "removemail");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.exportSpace, "exportspace");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions.editSpace, "editspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[3].permissionGranted, "setpagepermissions");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[4].permissionGranted, "removepage");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[5].permissionGranted, "createblogpost");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[6].permissionGranted, "removeblog");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[7].permissionGranted, "comment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[8].permissionGranted, "removecomment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[9].permissionGranted, "createattachment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[10].permissionGranted, "removeattachment");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[11].permissionGranted, "removemail");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[12].permissionGranted, "exportspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[13].permissionGranted, "editspace");
 		html += '</tr>';
 	}
 	

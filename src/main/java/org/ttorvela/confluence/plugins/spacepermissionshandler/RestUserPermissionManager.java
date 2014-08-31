@@ -142,7 +142,7 @@ public class RestUserPermissionManager {
 				granted = setSpacePermissionForUser(spe, targetUserName,
 						SpacePermission.ADMINISTER_SPACE_PERMISSION, space) ? true
 						: granted;
-				
+
 				if (granted) {
 					// Need to set the view permission individually
 					// if some other permission was added.
@@ -163,8 +163,28 @@ public class RestUserPermissionManager {
 
 		if (spacePermissionManager.hasPermission(spacePermissionType, space,
 				userAccessor.getUser(username))) {
+			boolean userPermission = false;
+
+			// TODO: Implement a check to determine if the permission is
+			// for the user or to the group
+			List<SpacePermission> spacePermissions = space.getPermissions();
+			for (SpacePermission spacePermission : spacePermissions) {
+				if (!spacePermission.isUserPermission()) {
+					continue;
+				} else if (spacePermission.getUserName().equalsIgnoreCase(
+						username)) {
+					if (spacePermission.getType().equalsIgnoreCase(
+							spacePermissionType)) {
+						userPermission = true;
+					}
+				}
+			}
+
 			spacePermissionsEntity.setPermissionStatus(spacePermissionType,
-					true);
+					true, userPermission);
+		} else {
+			spacePermissionsEntity.setPermissionStatus(spacePermissionType,
+					false, false);
 		}
 	}
 

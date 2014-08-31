@@ -1,102 +1,66 @@
 package org.ttorvela.confluence.plugins.spacepermissionshandler;
 
-import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.atlassian.confluence.security.SpacePermission;
+import javax.xml.bind.annotation.XmlElement;
 
 public class SpacePermissionsEntity {
 	@XmlElement
 	private String spaceName;
-	
+
 	@XmlElement
 	private String spaceKey;
 
 	@XmlElement(name = "permissions")
-	private SpacePermissionEntity permissions;
+	private List<SpacePermissionEntity> permissions;
+
+	@XmlElement(name = "userPermissions")
+	private SpacePermissionEntity userPermissions;
 
 	public SpacePermissionsEntity(String spaceName, String spaceKey) {
 		this.spaceName = spaceName;
 		this.spaceKey = spaceKey;
-		permissions = new SpacePermissionEntity();
+		permissions = new ArrayList<SpacePermissionEntity>();
 	}
 
-	public SpacePermissionsEntity(String spaceName,
-			String spaceKey, SpacePermissionEntity permissions) {
+	public SpacePermissionsEntity(String spaceName, String spaceKey,
+			SpacePermissionEntity permissions) {
 		this.spaceName = spaceName;
 		this.spaceKey = spaceKey;
-		this.permissions = permissions;
+		this.permissions = new ArrayList<SpacePermissionEntity>();
 	}
-	
+
 	public SpacePermissionsEntity() {
 	}
-	
-	@SuppressWarnings("deprecation")
-	public void setPermissionStatus(String permission, boolean status) {
-		if (permission.equalsIgnoreCase(SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION)) {
-			permissions.setSetPagePermissions(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.VIEWSPACE_PERMISSION)) {
-			permissions.setViewSpace(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_PAGE_PERMISSION)) {
-			permissions.setExportPage(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.ADMINISTER_SPACE_PERMISSION)) {
-			permissions.setEditSpace(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.COMMENT_PERMISSION)) {
-			permissions.setComment(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.CREATE_ATTACHMENT_PERMISSION)) {
-			permissions.setCreateAttachment(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.CREATEEDIT_PAGE_PERMISSION)) {
-			permissions.setCreatePage(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.EDITBLOG_PERMISSION)) {
-			permissions.setCreateBlogPost(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_SPACE_PERMISSION)) {
-			permissions.setExportSpace(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_MAIL_PERMISSION)) {
-			permissions.setRemoveMail(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_ATTACHMENT_PERMISSION)) {
-			permissions.setRemoveAttachment(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_BLOG_PERMISSION)) {
-			permissions.setRemoveBlog(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_COMMENT_PERMISSION)) {
-			permissions.setRemoveComment(status);
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_PAGE_PERMISSION)) {
-			permissions.setRemovePage(status);
+
+	public void setPermissionStatus(String permission, boolean status,
+			boolean userPermission) {
+		boolean found = false;
+
+		for (SpacePermissionEntity sPe : permissions) {
+			if (sPe.getPermissionType().equalsIgnoreCase(permission)) {
+				sPe.setPermissionGranted(status);
+				found = true;
+			}
+		}
+
+		if (!found) {
+			SpacePermissionEntity sPEntity = new SpacePermissionEntity(
+					permission, status, userPermission);
+			permissions.add(sPEntity);
 		}
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	public boolean getPermissionStatus(String permission) {
 		boolean status = false;
-		
-		if (permission.equalsIgnoreCase(SpacePermission.SET_PAGE_PERMISSIONS_PERMISSION)) {
-			status = permissions.getSetPagePermissions();
-		} else if (permission.equalsIgnoreCase(SpacePermission.VIEWSPACE_PERMISSION)) {
-			status = permissions.getViewSpace();
-		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_PAGE_PERMISSION)) {
-			status = permissions.getExportPage();
-		} else if (permission.equalsIgnoreCase(SpacePermission.ADMINISTER_SPACE_PERMISSION)) {
-			status = permissions.getEditSpace();
-		} else if (permission.equalsIgnoreCase(SpacePermission.COMMENT_PERMISSION)) {
-			status = permissions.getComment();
-		} else if (permission.equalsIgnoreCase(SpacePermission.CREATE_ATTACHMENT_PERMISSION)) {
-			status = permissions.getCreateAttachment();
-		} else if (permission.equalsIgnoreCase(SpacePermission.CREATEEDIT_PAGE_PERMISSION)) {
-			status = permissions.getCreatePage();
-		} else if (permission.equalsIgnoreCase(SpacePermission.EDITBLOG_PERMISSION)) {
-			status = permissions.getCreateBlogPost();
-		} else if (permission.equalsIgnoreCase(SpacePermission.EXPORT_SPACE_PERMISSION)) {
-			status = permissions.getExportSpace();
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_MAIL_PERMISSION)) {
-			status = permissions.getRemoveMail();
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_ATTACHMENT_PERMISSION)) {
-			status = permissions.getRemoveAttachment();
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_BLOG_PERMISSION)) {
-			status = permissions.getRemoveBlog();
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_COMMENT_PERMISSION)) {
-			status = permissions.getRemoveComment();
-		} else if (permission.equalsIgnoreCase(SpacePermission.REMOVE_PAGE_PERMISSION)) {
-			status = permissions.getRemovePage();
+
+		for (SpacePermissionEntity sPe : permissions) {
+			if (sPe.getPermissionType().equalsIgnoreCase(permission)) {
+				status = sPe.isPermissionGranted();
+			}
 		}
-		
+
 		return status;
 	}
 
@@ -116,11 +80,11 @@ public class SpacePermissionsEntity {
 		this.spaceKey = spaceKey;
 	}
 
-	public SpacePermissionEntity getPermissions() {
+	public List<SpacePermissionEntity> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(SpacePermissionEntity permissions) {
+	public void setPermissions(List<SpacePermissionEntity> permissions) {
 		this.permissions = permissions;
 	}
 
