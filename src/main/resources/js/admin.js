@@ -251,7 +251,7 @@ AJS.toInit(function() {
 					promise.complete(function() {
 						clearTimeout(t);
 						killSpinner();
-						$throbber.addClass("hidden");
+						$("#throbber").addClass("hidden");
 					});
 				}
 			});
