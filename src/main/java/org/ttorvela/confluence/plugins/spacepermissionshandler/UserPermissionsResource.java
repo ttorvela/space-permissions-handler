@@ -2,10 +2,12 @@ package org.ttorvela.confluence.plugins.spacepermissionshandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -16,7 +18,6 @@ import com.atlassian.confluence.security.PermissionManager;
 import com.atlassian.confluence.security.SpacePermissionManager;
 import com.atlassian.confluence.spaces.SpaceManager;
 import com.atlassian.confluence.user.UserAccessor;
-
 import com.atlassian.sal.api.transaction.TransactionCallback;
 import com.atlassian.sal.api.transaction.TransactionTemplate;
 import com.atlassian.sal.api.user.UserManager;
@@ -64,6 +65,7 @@ public class UserPermissionsResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/{username}")
 	public Response put(final @PathParam("username") String targetUsername,
+			@DefaultValue("false") @QueryParam("onlyUserPermissions") final boolean onlyUserPermissions,
 			final UserPermissionsEntity userPermissionsEntity,
 			@Context HttpServletRequest request) {
 		String username = userManager.getRemoteUsername(request);
@@ -78,7 +80,7 @@ public class UserPermissionsResource {
 		transactionTemplate.execute(new TransactionCallback() {
 			public Object doInTransaction() {
 				restUserPermissionManager.setPermissions(targetUsername,
-						userPermissionsEntity);
+						userPermissionsEntity, onlyUserPermissions);
 				return null;
 			}
 		});

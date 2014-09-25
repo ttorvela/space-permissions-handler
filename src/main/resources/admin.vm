@@ -19,6 +19,10 @@
 		<label for="usernameTo">$i18n.getText("spacepermissionshandler.admin.username.to.label")</label>
 		<input type="text" id="usernameTo" name="usernameTo" class="autocomplete-user" data-none-message="No users found" data-template="{username}">
 	  </div>
+	  <div class="checkbox">
+		<input id="copyOnlyUserPermissions" class="checkbox" type="checkbox" name="copyOnlyUserPermissions">
+		<label for="copyOnlyUserPermissions">Copy only user permissions (ignore permissions from groups)</label>
+	  </div>
 	  <div class="field-group">
 		<input id="copyButton" type="submit" value="$i18n.getText("spacepermissionshandler.admin.copy.label")" class="button" style="display: none;">
 		<input id="viewButton" type="submit" value="$i18n.getText("spacepermissionshandler.admin.view.label")" class="button">

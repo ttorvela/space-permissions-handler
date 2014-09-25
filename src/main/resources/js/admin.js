@@ -8,10 +8,16 @@ function getPermissions() {
 	});
 }
 
-function copyPermissions(permissions) {
+function copyPermissions(permissions, onlyUserPermissions) {
+	var checked = false;
+	
+	if (onlyUserPermissions == "checked") {
+		checked = true;
+	}
+	
 	AJS.$.ajax({
 		url : baseUrl + "/rest/userpermissions/1.0/"
-				+ AJS.$("#usernameTo").attr("value"),
+				+ AJS.$("#usernameTo").attr("value") + "?onlyUserPermissions=" + checked,
 		type : "PUT",
 		contentType : "application/json",
 		data : JSON.stringify(permissions),
@@ -28,7 +34,11 @@ function copyPermissions(permissions) {
 
 function printHeader(permissions) {
 	var $permissionResults = $("#results");
-	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.$("#usernameFrom").attr("value") + "'s permissions in " + permissions.spacePermissions.length + " spaces" + "</h2>");
+	var headerText = 
+	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.$("#usernameFrom").attr("value") + "'s permissions in "
+			+ permissions.spacePermissions.length + " spaces"
+			+ ". Group permissions are marked with *."
+			+ "</h2>");
 
 	var html = "";
 	var ver5 = versionNumber.substring(0, 1) == "5";
@@ -114,22 +124,22 @@ function printPermissions(permissions) {
 
 		//TODO: Add a symbol if the permission is not user permission
 		
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[0].permissionGranted, "viewspace");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[1].permissionGranted, "createpage");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[0].permissionGranted, "viewspace", permissions.spacePermissions[i].permissions[0].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[1].permissionGranted, "createpage", permissions.spacePermissions[i].permissions[1].userPermission);
 		if (!ver5) {
-			html += printPermissionStatus(permissions.spacePermissions[i].permissions[2].permissionGranted, "exportpage");
+			html += printPermissionStatus(permissions.spacePermissions[i].permissions[2].permissionGranted, "exportpage", permissions.spacePermissions[i].permissions[2].userPermission);
 		}
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[3].permissionGranted, "setpagepermissions");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[4].permissionGranted, "removepage");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[5].permissionGranted, "createblogpost");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[6].permissionGranted, "removeblog");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[7].permissionGranted, "comment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[8].permissionGranted, "removecomment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[9].permissionGranted, "createattachment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[10].permissionGranted, "removeattachment");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[11].permissionGranted, "removemail");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[12].permissionGranted, "exportspace");
-		html += printPermissionStatus(permissions.spacePermissions[i].permissions[13].permissionGranted, "editspace");
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[3].permissionGranted, "setpagepermissions", permissions.spacePermissions[i].permissions[3].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[4].permissionGranted, "removepage", permissions.spacePermissions[i].permissions[4].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[5].permissionGranted, "createblogpost", permissions.spacePermissions[i].permissions[5].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[6].permissionGranted, "removeblog", permissions.spacePermissions[i].permissions[6].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[7].permissionGranted, "comment", permissions.spacePermissions[i].permissions[7].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[8].permissionGranted, "removecomment", permissions.spacePermissions[i].permissions[8].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[9].permissionGranted, "createattachment", permissions.spacePermissions[i].permissions[9].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[10].permissionGranted, "removeattachment", permissions.spacePermissions[i].permissions[10].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[11].permissionGranted, "removemail", permissions.spacePermissions[i].permissions[11].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[12].permissionGranted, "exportspace", permissions.spacePermissions[i].permissions[12].userPermission);
+		html += printPermissionStatus(permissions.spacePermissions[i].permissions[13].permissionGranted, "editspace", permissions.spacePermissions[i].permissions[13].userPermission);
 		html += '</tr>';
 	}
 	
@@ -140,7 +150,7 @@ function printPermissions(permissions) {
 	return html;
 }
 
-function printPermissionStatus(status, permissionName) {
+function printPermissionStatus(status, permissionName, userPermission) {
 	var ver5 = versionNumber.substring(0, 1) == "5";
 
 	var html = "";
@@ -167,6 +177,10 @@ function printPermissionStatus(status, permissionName) {
 			html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">';
 		} else {
 			html += 'src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/error.png">';
+		}
+		
+		if (userPermission == false && status == true) {
+			html += '*';
 		}
 		
 		html += '</td>';
@@ -218,7 +232,7 @@ AJS.toInit(function() {
 					var promise = getPermissions();
 					promise.success(function(permissions) {
 						if (AJS.$("#usernameTo").attr("value").length > 0) {
-							copyPermissions(permissions);
+							copyPermissions(permissions, AJS.$("#copyOnlyUserPermissions").attr("checked"));
 						} else {
 							var $copyStatus= $("#copyStatus");
 							$copyStatus.html('');

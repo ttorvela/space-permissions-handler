@@ -1,5 +1,5 @@
-Space Permissions Handler for Confluence - branch 4.3.7
-=======================================================
+Space Permissions Handler for Confluence
+========================================
 
 Purpose of this plug-in is to provide admin UI to view and copy Confluence user's space permissions to another Confluence user. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
 
@@ -71,6 +71,15 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+25.9.2014
+---------
+
+Added: Show which permissions are group permissions by displaying * character.
+Added: Copy only user permissions option (still not working correctly).
+Fixed: Export page and edit page permissions were mixed up in the UI.
+Finished earlier: Merge 4.3.7 changes to the master branch.
+Finished earlier: Rename plugin to Space Permissions Handler for Confluence
+
 13.8.2014
 ---------
 
@@ -112,5 +121,3 @@ TODO
 
 1. Fix TODOs from the code.
 2. Plugin screenshots.
-3. Merge 4.3.7 changes to the master branch.
-4. Finish renaming to Space Permissions Handler for Confluence

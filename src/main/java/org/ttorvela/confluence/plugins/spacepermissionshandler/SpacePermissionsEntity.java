@@ -41,6 +41,7 @@ public class SpacePermissionsEntity {
 		for (SpacePermissionEntity sPe : permissions) {
 			if (sPe.getPermissionType().equalsIgnoreCase(permission)) {
 				sPe.setPermissionGranted(status);
+				sPe.setUserPermission(userPermission);
 				found = true;
 			}
 		}
@@ -62,6 +63,18 @@ public class SpacePermissionsEntity {
 		}
 
 		return status;
+	}
+	
+	public SpacePermissionEntity getSpacePermissionEntity(String permission) {
+		SpacePermissionEntity entity = null;
+
+		for (SpacePermissionEntity sPe : permissions) {
+			if (sPe.getPermissionType().equalsIgnoreCase(permission)) {
+				entity = sPe;
+			}
+		}
+
+		return entity;
 	}
 
 	public String getSpaceName() {
