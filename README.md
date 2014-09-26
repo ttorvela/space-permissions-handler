@@ -1,55 +1,94 @@
 Space Permissions Handler for Confluence
 ========================================
 
-Purpose of this plug-in is to provide admin UI to view and copy Confluence user's space permissions to another Confluence user. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
+Space Permissions Handler helps copying space permissions from one user to another. It also allows viewing user's space permissions.
+
+Purpose of the plug-in is to provide admin UI to view and copy Confluence user's space permissions to another Confluence user. By default source user's permissions that come from group memberships are copied to the target user as user permissions. These group permissions can also be ignored in the copy process. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
 
 REST-API
 --------
 
-**/userpermissions/{user-id} [GET, PUT]**
+**/rest/userpermissions/1.0/{user-id} [GET, PUT]**
 - GET returns users all space permissions as JSON:
 {
 	"spacePermissions": [
+	{
+		"spaceName":"Confluence Latest",
+		"spaceKey":"DOC",
+		"permissions":[
 		{
-			"space": "spaceKey1",
-			"permissions": {
-				"REMOVE_PAGE_PERMISSION": false,
-				"ADMINISTER_SPACE_PERMISSION": false,
-				"COMMENT_PERMISSION": true,
-				"CREATE_ATTACHMENT_PERMISSION": true,
-				"CREATEEDIT_PAGE_PERMISSION": true,
-				"EDITBLOG_PERMISSION": true,
-				"EXPORT_SPACE_PERMISSION": true,
-				"REMOVE_ATTACHMENT_PERMISSION": true,
-				"REMOVE_BLOG_PERMISSION": true,
-				"REMOVE_COMMENT_PERMISSION": true,
-				"REMOVE_MAIL_PERMISSION": true,
-				"REMOVE_PAGE_PERMISSION": true,
-				"SET_PAGE_PERMISSIONS_PERMISSION": true,
-				"VIEWSPACE_PERMISSION": true
-				}
+			"permissionType":"VIEWSPACE",
+			"permissionGranted":true,
+			"userPermission":false
 		},
 		{
-			"space": "spaceKey2",
-			  "permissions": {
-				"REMOVE_PAGE_PERMISSION": false,
-				"ADMINISTER_SPACE_PERMISSION": false,
-				"COMMENT_PERMISSION": true,
-				"CREATE_ATTACHMENT_PERMISSION": true,
-				"CREATEEDIT_PAGE_PERMISSION": true,
-				"EDITBLOG_PERMISSION": true,
-				"EXPORT_SPACE_PERMISSION": true,
-				"REMOVE_ATTACHMENT_PERMISSION": true,
-				"REMOVE_BLOG_PERMISSION": true,
-				"REMOVE_COMMENT_PERMISSION": true,
-				"REMOVE_MAIL_PERMISSION": true,
-				"REMOVE_PAGE_PERMISSION": true,
-				"SET_PAGE_PERMISSIONS_PERMISSION": true,
-				"VIEWSPACE_PERMISSION": true
-				}
-		}
+			"permissionType":"EDITSPACE",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"EXPORTPAGE",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"SETPAGEPERMISSIONS",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"REMOVEPAGE",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"EDITBLOG",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"REMOVEBLOG",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"COMMENT",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"REMOVECOMMENT",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"CREATEATTACHMENT",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"REMOVEATTACHMENT",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"REMOVEMAIL",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"EXPORTSPACE",
+			"permissionGranted":true,
+			"userPermission":false
+		},
+		{
+			"permissionType":"SETSPACEPERMISSIONS",
+			"permissionGranted":true,
+			"userPermission":false
+		}]
+	}
 	]
- }
+}
 - PUT updates user's permissions according to payload
 
 HELP

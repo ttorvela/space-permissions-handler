@@ -1,0 +1,10 @@
+Add-on name: Space Permissions Handler for Confluence
+Add-on tagline: Space Permissions Handler helps copying space permissions from one user to another. It also allows viewing user's space permissions.
+More details: Purpose of the plug-in is to provide admin UI to view and copy Confluence user's space permissions to another Confluence user. By default source user's permissions that come from group memberships are copied to the target user as user permissions. These group permissions can also be ignored in the copy process. Plug-in also exposes a new REST interface to get user's all space permissions and to set user's all space permissions.
+Highlight title (3): Handle space permissions
+Highlight summary (3): Copy and view user's space permissions.
+Documentation URL: https://github.com/ttorvela/space-permissions-handler/wiki
+Issue collector: https://github.com/ttorvela/space-permissions-handler/issues
+Version officially supported: No
+Release summary: Initial release with space permission view and copy capabilities.
+New in this release: Initial release with space permission view and copy capabilities.
