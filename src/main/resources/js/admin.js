@@ -121,8 +121,6 @@ function printPermissions(permissions) {
 			+ '" href="/confluence/spaces/spacepermissions.action?key='
 			+ permissions.spacePermissions[i].spaceKey + '">' 
 			+ permissions.spacePermissions[i].spaceName + '</a>' + '</td>';
-
-		//TODO: Add a symbol if the permission is not user permission
 		
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions[0].permissionGranted, "viewspace", permissions.spacePermissions[i].permissions[0].userPermission);
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions[1].permissionGranted, "createpage", permissions.spacePermissions[i].permissions[1].userPermission);
