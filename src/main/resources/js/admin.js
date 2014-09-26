@@ -248,7 +248,7 @@ AJS.toInit(function() {
 					});
 					promise.complete(function() {
 						clearTimeout(t);
-						killSpinner();
+						//killSpinner();
 						$("#throbber").addClass("hidden");
 					});
 				}
