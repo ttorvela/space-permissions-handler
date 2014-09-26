@@ -71,6 +71,13 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+26.9.2014
+---------
+
+Removed TODOs from the code.
+Updated: Plugin screenshots.
+
+
 25.9.2014
 ---------
 
@@ -115,9 +122,3 @@ Quick and dirty UI added that displays permissions found from the user whose per
 It is finally working. Extensive tests have not been performed but at least with test users in test environment it is possible to specify a user whose permissions will be copied to another user. If the source user has permission via groups those permissions will be added to the target user as individual permissions even when the target user belongs to the same groups.
 
 There is no UI yet that would display wether the copying was successful or not!
-
-TODO
-====
-
-1. Fix TODOs from the code.
-2. Plugin screenshots.
