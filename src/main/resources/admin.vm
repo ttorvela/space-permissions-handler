@@ -29,9 +29,8 @@
 	  </div>
 	  <div id="copyStatus">
 	  </div>
-	  <div id="results">
-	  </div>
-	  <div id="throbber" class="hidden"></div>
 	</form>
+	<div id="results"></div>
+	<div id="throbber" class="hidden"></div>
   </body>
 </html>
