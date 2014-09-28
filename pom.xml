@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ttorvela.confluence.plugins</groupId>
     <artifactId>space-permissions-handler</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <organization>
         <name>Teemu Torvela</name>
@@ -21,7 +21,8 @@
         <developerConnection>scm:git:https://github.com/ttorvela/space-permissions-handler</developerConnection>
         <url>https://github.com/ttorvela/space-permissions-handler</url>
     </scm>
-
+	
+	
     <dependencies>
 		<dependency>
 		  <groupId>com.atlassian.sal</groupId>
