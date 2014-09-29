@@ -8,9 +8,9 @@ Purpose of the plug-in is to provide admin UI to view and copy Confluence user's
 REST-API
 --------
 
-**/rest/userpermissions/1.0/{user-id} [GET, PUT]**
-- GET returns users all space permissions as JSON:
-{
+### GET returns users all space permissions as JSON:
+**/rest/userpermissions/1.0/{user-id}**
+`{
 	"spacePermissions": [
 	{
 		"spaceName":"Confluence Latest",
@@ -88,11 +88,18 @@ REST-API
 		}]
 	}
 	]
-}
-- PUT updates user's permissions according to payload
+}`
+
+### PUT updates user's permissions according to payload
+**/rest/userpermissions/1.0/{user-id}?onlyUserPermissions={true/false}**
+
+JSON payload for HTTP PUT is in same format as the payload received from HTTP GET. Example of this format is shown above.
 
 HELP
 ====
+
+Plugin's User Guide:
+https://github.com/ttorvela/space-permissions-handler/wiki
 
 Atlassian Plugin SDK:
 https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK
@@ -109,6 +116,11 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 
 CURRENT STATUS
 ==============
+
+29.9.2014
+---------
+
+Created user guide to the wiki and updated README.md.
 
 26.9.2014
 ---------
