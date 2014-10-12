@@ -3,7 +3,7 @@
 function getPermissions() {
 	return AJS.$.ajax({
 		url : baseUrl + "/rest/userpermissions/1.0/"
-				+ AJS.$("#usernameFrom").attr("value"),
+				+ AJS.escapeHtml(AJS.$("#usernameFrom").attr("value")),
 		dataType : "json"
 	});
 }
@@ -17,7 +17,7 @@ function copyPermissions(permissions, onlyUserPermissions) {
 	
 	AJS.$.ajax({
 		url : baseUrl + "/rest/userpermissions/1.0/"
-				+ AJS.$("#usernameTo").attr("value") + "?onlyUserPermissions=" + checked,
+				+ AJS.escapeHtml(AJS.$("#usernameTo").attr("value")) + "?onlyUserPermissions=" + checked,
 		type : "PUT",
 		contentType : "application/json",
 		data : JSON.stringify(permissions),
@@ -35,7 +35,7 @@ function copyPermissions(permissions, onlyUserPermissions) {
 function printHeader(permissions) {
 	var $permissionResults = $("#results");
 	var headerText = 
-	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.$("#usernameFrom").attr("value") + "'s permissions in "
+	$permissionResults.html("<h2 id='permissionsHeader'>" + AJS.escapeHtml(AJS.$("#usernameFrom").attr("value")) + "'s permissions in "
 			+ permissions.spacePermissions.length + " spaces"
 			+ ". Group permissions are marked with *."
 			+ "</h2>");
@@ -117,10 +117,10 @@ function printPermissions(permissions) {
 		} else {
 			html += '<tr class="space-permission-row">';
 		}
-		html += '<td> <a title="' + permissions.spacePermissions[i].spaceName
+		html += '<td> <a title="' + AJS.escapeHtml(permissions.spacePermissions[i].spaceName)
 			+ '" href="/confluence/spaces/spacepermissions.action?key='
-			+ permissions.spacePermissions[i].spaceKey + '">' 
-			+ permissions.spacePermissions[i].spaceName + '</a>' + '</td>';
+			+ AJS.escapeHtml(permissions.spacePermissions[i].spaceKey) + '">' 
+			+ AJS.escapeHtml(permissions.spacePermissions[i].spaceName) + '</a>' + '</td>';
 		
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions[0].permissionGranted, "viewspace", permissions.spacePermissions[i].permissions[0].userPermission);
 		html += printPermissionStatus(permissions.spacePermissions[i].permissions[1].permissionGranted, "createpage", permissions.spacePermissions[i].permissions[1].userPermission);
