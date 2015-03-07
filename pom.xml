@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ttorvela.confluence.plugins</groupId>
     <artifactId>space-permissions-handler</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
 
     <organization>
         <name>Teemu Torvela</name>
@@ -85,11 +85,11 @@
                 <configuration>
                     <productVersion>${confluence.version}</productVersion>
                     <productDataVersion>${confluence.data.version}</productDataVersion>
-					<productDataPath>/temp/generated-test-resources.zip</productDataPath>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -99,9 +99,9 @@
     </build>
 
     <properties>
-        <confluence.version>5.6.3</confluence.version>
-        <confluence.data.version>5.6.3</confluence.data.version>
-        <amps.version>4.2.13</amps.version>
+        <confluence.version>5.7</confluence.version>
+        <confluence.data.version>5.7</confluence.data.version>
+        <amps.version>5.0.4</amps.version>
         <plugin.testrunner.version>1.1.2</plugin.testrunner.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
