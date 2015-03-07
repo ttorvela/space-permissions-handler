@@ -117,6 +117,11 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+7.3.2015
+--------
+
+Released 1.1 version. Only updated pom.xml to support Confluence 5.7 version and removed test data from pom.xml.
+
 29.9.2014
 ---------
 
