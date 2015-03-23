@@ -235,8 +235,18 @@ AJS.toInit(function() {
 							var $copyStatus= $("#copyStatus");
 							$copyStatus.html('');
 						}
-						var html = printHeader(permissions);
-						html += printPermissions(permissions);
+						
+						//var template = Confluence.Templates.Example.helloWorld({name: "John Smith"});
+
+//						var html = printHeader(permissions);
+//						html += printPermissions(permissions);
+						
+						//console.log(permissions);
+						var ver5 = versionNumber.substring(0, 1) == "5";
+						
+						var html = Confluence.Templates.SpacePermissionsHandler.listSpacePermissions(
+								{permissions: permissions, userFrom: AJS.$("#usernameFrom").attr("value"),
+								 version5: ver5});
 						
 						var $permissionResults = $("#results");
 						$permissionResults.append(html);

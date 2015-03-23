@@ -1,0 +1,156 @@
+{namespace Confluence.Templates.SpacePermissionsHandler}
+/**
+ * Renders a table of selected space permissions
+ * 
+ * @param permissions
+ * @param userFrom
+ * @param version5
+ */
+{template .listSpacePermissions}
+
+<h2 id='permissionsHeader'>{$userFrom}'s permissions in {$permissions.spacePermissions.length} spaces. Group permissions are marked with *.</h2>
+			
+
+{if $version5}
+    <table class="permissions aui" id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">
+{else}
+	<table id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">
+{/if}
+	<tbody>
+		<tr>
+			<th width="25%" class="permissionHeading">&nbsp;</th>
+			{if $version5}
+				<th class="permissionHeading">All</th>
+				<th class="permissionSuperTab" colspan="3">Pages</th>
+			{else}
+				<th class="permissionHeading">&nbsp;</th>
+				<th class="permissionSuperTab" colspan="4">Pages</th>
+			{/if}
+			<th class="permissionSuperTab" colspan="2">Blog</th>
+			<th class="permissionSuperTab" colspan="2">Comments</th>
+			<th class="permissionSuperTab" colspan="2">Attachments</th>
+			<th class="permissionSuperTab">Mail</th>
+			<th class="permissionSuperTab" colspan="2">Space</th>
+		</tr>
+		<tr>
+		
+		<th class="permissionHeading">Space name</th>
+		<th width="40" class="permissionSuperTab">View</th>
+			
+		{if $version5}
+			<th width="40" class="permissions-group-start">Add</th>
+			<th width="40">Restrict</th>
+			<th width="40">Delete</th>
+			<th width="40" class="permissions-group-start">Add</th>
+			<th width="40">Delete</th>
+			<th width="40" class="permissions-group-start">Add</th>
+			<th width="40">Delete</th>
+			<th width="40" class="permissions-group-start">Add</th>
+			<th width="40">Delete</th>
+			<th width="40" class="permissions-group-start">Delete</th>
+			<th width="40" class="permissions-group-start">Export</th>
+			<th width="40">Admin</th>
+		{else}
+			<th width="40" class="permissionTab">Add</th>
+			<th width="40" class="permissionTab">Export</th>
+			<th width="40" class="permissionTab">Restrict</th>
+			<th width="40" class="permissionTab">Remove</th>
+			<th width="40" class="permissionTab">Add</th>
+			<th width="40" class="permissionTab">Remove</th>
+			<th width="40" class="permissionTab">Add</th>
+			<th width="40" class="permissionTab">Remove</th>
+			<th width="40" class="permissionTab">Add</th>
+			<th width="40" class="permissionTab">Remove</th>
+			<th width="40" class="permissionTab">Remove</th>
+			<th width="40" class="permissionTab">Export</th>
+			<th width="40" class="permissionTab">Admin</th>
+		{/if}
+		</tr>
+		
+		{foreach $spacePermission in $permissions.spacePermissions}
+		<tr class="space-permission-row">
+			<td><a title="{$spacePermission.spaceName}"
+				href="/confluence/spaces/spacepermissions.action?key={$spacePermission.spaceKey}"> 
+				{$spacePermission.spaceName}</a>
+			</td>
+			
+			//TODO: Add foreach loop here as well
+			{foreach $permission in $spacePermission.permissions}
+				{call Confluence.Templates.SpacePermissionsHandler.printPermissionStatus}
+					{param status: $permission.permissionGranted/}
+					{param permissionName: $permission.permissionType/}
+					{param userPermission: $permission.userPermission/}
+					{param version5: $version5/}
+				{/call}
+			{/foreach}
+		</tr>
+
+			/*
+			
+			{call Confluence.Templates.SpacePermissionsHandler.printPermissionStatus}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{param href: status({$permissions.spacePermissions[i].permissions[0].permissionGranted}) /}&nbsp;&nbsp;&nbsp;&nbsp;
+			{/call}
+				
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[0].permissionGranted}, "viewspace", {$permissions.spacePermissions[i].permissions[0].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[1].permissionGranted}, "createpage", {$permissions.spacePermissions[i].permissions[1].userPermission});
+			if (!ver5) {
+				Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[2].permissionGranted}, "exportpage", {$permissions.spacePermissions[i].permissions[2].userPermission});
+			}
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[3].permissionGranted}, "setpagepermissions", {$permissions.spacePermissions[i].permissions[3].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[4].permissionGranted}, "removepage", {$permissions.spacePermissions[i].permissions[4].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[5].permissionGranted}, "createblogpost", {$permissions.spacePermissions[i].permissions[5].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[6].permissionGranted}, "removeblog", {$permissions.spacePermissions[i].permissions[6].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[7].permissionGranted}, "comment", {$permissions.spacePermissions[i].permissions[7].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[8].permissionGranted}, "removecomment", {$permissions.spacePermissions[i].permissions[8].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[9].permissionGranted}, "createattachment", {$permissions.spacePermissions[i].permissions[9].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[10].permissionGranted}, "removeattachment", {$permissions.spacePermissions[i].permissions[10].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[11].permissionGranted}, "removemail", {$permissions.spacePermissions[i].permissions[11].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[12].permissionGranted}, "exportspace", {$permissions.spacePermissions[i].permissions[12].userPermission});
+			Confluence.Templates.SpacePermissionsHandler.printPermissionStatus({$permissions.spacePermissions[i].permissions[13].permissionGranted}, "editspace", {$permissions.spacePermissions[i].permissions[13].userPermission});
+			*/
+		{/foreach}
+	</tbody>
+</table>
+{/template}
+
+/**
+ * Renders a permission details of selected permission
+ * @param status
+ * @param permissionName
+ * @param userPermission
+ * @param version5
+ */
+{template .printPermissionStatus}
+	{if not $version5 or ($version5 and $permissionName != 'EXPORTPAGE')}
+		
+		<td valign="middle" align="center" data-permission-set="{$status}"
+		data-permission-group="" data-permission="{$permissionName}" class="permissionCell 
+
+		{if ($permissionName == 'EDITSPACE')
+			or ($permissionName == 'EDITBLOG')
+				or ($permissionName == 'COMMENT')
+					or ($permissionName == 'CREATEATTACHMENT')
+						or ($permissionName == 'REMOVEMAIL')
+							or ($permissionName == 'EXPORTSPACE')}
+			 {sp} permissions-group-start">
+		{else}
+			 {sp} permissions-group-start">
+		{/if}
+		
+		
+		<img width="16" height="16" align="absmiddle" border="0" 
+
+		{if $status}
+			{if $userPermission}
+				src="http://tepssups-pc:1990/confluence/s/en_GB/5780/NOCACHE1/_/images/icons/emoticons/check.png">
+			{else}
+				src="http://tepssups-pc:1990/confluence/s/en_GB/5780/NOCACHE1/_/images/icons/emoticons/star_blue.png">
+			{/if}
+			//src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/check.png">
+		{elseif $version5}
+			src="http://tepssups-pc:1990/confluence/s/en_GB/5780/NOCACHE1/_/images/icons/emoticons/error.png">
+			//src="' + AJS.params.staticResourceUrlPrefix + '/images/icons/emoticons/error.png">
+		{/if}
+	</td>
+	{/if}	
+{/template}	
