@@ -117,6 +117,15 @@ https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+wit
 CURRENT STATUS
 ==============
 
+31.3.2015
+---------
+
+Released 1.2 version.
+
+Added: Use SOY templates (Google Closure) to generate permission tables.
+Added: Use separate graphic for group permissions instead of * character.
+Fixed: Images do not probably show correctly in localized Confluence installation. (Needs to be confirmed).
+
 7.3.2015
 --------
 
