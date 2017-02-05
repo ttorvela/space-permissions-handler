@@ -4,7 +4,6 @@
  *
  * @param permissions
  * @param userFrom
- * @param version5
  * @param emoticonsUrl
  */
 {template .listSpacePermissions}
@@ -14,35 +13,26 @@
 </h2>
 
 
-{if $version5}
-    <table class="permissions aui" id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">
-{else}
-    <table id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">
-{/if}
+
+<table class="permissions aui" id="uPermissionsTable" width="100%" cellspacing="0" cellpadding="2" border="0">
+
     <tbody>
         <tr>
-            <th width="25%" class="permissionHeading">&nbsp;</th>
-            {if $version5}
-                <th class="permissionHeading">All</th>
-                <th class="permissionSuperTab" colspan="3">Pages</th>
-            {else}
-                <th class="permissionHeading">&nbsp;</th>
-                <th class="permissionSuperTab" colspan="4">Pages</th>
-            {/if}
-            <th class="permissionSuperTab" colspan="2">Blog</th>
-            <th class="permissionSuperTab" colspan="2">Comments</th>
-            <th class="permissionSuperTab" colspan="2">Attachments</th>
-            <th class="permissionSuperTab">Mail</th>
-            <th class="permissionSuperTab" colspan="2">Space</th>
+            <th width="25%">&nbsp;</th>
+            <th colspan="2">All</th>
+            <th colspan="2">Pages</th>
+            <th colspan="2">Blog</th>
+            <th colspan="2">Attachments</th>
+            <th colspan="2">Comments</th>
+			<th>Restrictions</th>
+			<th>Mail</th>
+			<th colspan="2">Space</th>
         </tr>
         <tr>
-
-        <th class="permissionHeading">Space name</th>
-        <th width="40" class="permissionSuperTab">View</th>
-
-        {if $version5}
+	        <th>Space name</th>
+	        <th width="40">View</th>
+	        <th width="40">Delete Own</th>
             <th width="40" class="permissions-group-start">Add</th>
-            <th width="40">Restrict</th>
             <th width="40">Delete</th>
             <th width="40" class="permissions-group-start">Add</th>
             <th width="40">Delete</th>
@@ -50,24 +40,10 @@
             <th width="40">Delete</th>
             <th width="40" class="permissions-group-start">Add</th>
             <th width="40">Delete</th>
+            <th width="40" class="permissions-group-start">Add/Delete</th>
             <th width="40" class="permissions-group-start">Delete</th>
             <th width="40" class="permissions-group-start">Export</th>
             <th width="40">Admin</th>
-        {else}
-            <th width="40" class="permissionTab">Add</th>
-            <th width="40" class="permissionTab">Export</th>
-            <th width="40" class="permissionTab">Restrict</th>
-            <th width="40" class="permissionTab">Remove</th>
-            <th width="40" class="permissionTab">Add</th>
-            <th width="40" class="permissionTab">Remove</th>
-            <th width="40" class="permissionTab">Add</th>
-            <th width="40" class="permissionTab">Remove</th>
-            <th width="40" class="permissionTab">Add</th>
-            <th width="40" class="permissionTab">Remove</th>
-            <th width="40" class="permissionTab">Remove</th>
-            <th width="40" class="permissionTab">Export</th>
-            <th width="40" class="permissionTab">Admin</th>
-        {/if}
         </tr>
 
         {foreach $spacePermission in $permissions.spacePermissions}
@@ -82,7 +58,6 @@
                     {param status: $permission.permissionGranted/}
                     {param permissionName: $permission.permissionType/}
                     {param userPermission: $permission.userPermission/}
-                    {param version5: $version5/}
                     {param emoticonsUrl: $emoticonsUrl/}
                 {/call}
             {/foreach}
@@ -97,13 +72,10 @@
  * @param status
  * @param permissionName
  * @param userPermission
- * @param version5
  * @param emoticonsUrl
  */
 {template .printPermissionStatus}
-    {if not $version5 or ($version5 and $permissionName != 'EXPORTPAGE')}
-
-        <td valign="middle" align="center" data-permission-set="{$status}"
+    <td valign="middle" align="center" data-permission-set="{$status}"
         data-permission-group="" data-permission="{$permissionName}" class="permissionCell
 
         {if $permissionName == 'EDITSPACE'
@@ -111,7 +83,8 @@
         or $permissionName == 'COMMENT'
         or $permissionName == 'CREATEATTACHMENT'
         or $permissionName == 'REMOVEMAIL'
-        or $permissionName ==  'EXPORTSPACE'}
+        or $permissionName == 'EXPORTSPACE'
+        or $permissionName == 'SETPAGEPERMISSIONS'}
              {sp} permissions-group-start">
         {else}
              ">
@@ -130,5 +103,4 @@
             src="{$emoticonsUrl}/error.png">
         {/if}
     </td>
-    {/if}
 {/template}

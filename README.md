@@ -17,75 +17,76 @@ REST-API
 		"spaceKey":"DOC",
 		"permissions":[
 		{
-			"permissionType":"VIEWSPACE",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"EDITSPACE",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"EXPORTPAGE",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"SETPAGEPERMISSIONS",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"REMOVEPAGE",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"EDITBLOG",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"REMOVEBLOG",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"COMMENT",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"REMOVECOMMENT",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"CREATEATTACHMENT",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"REMOVEATTACHMENT",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"REMOVEMAIL",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"EXPORTSPACE",
-			"permissionGranted":true,
-			"userPermission":false
-		},
-		{
-			"permissionType":"SETSPACEPERMISSIONS",
-			"permissionGranted":true,
-			"userPermission":false
-		}]
+          "permissionType": "VIEWSPACE",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVEOWNCONTENT",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "EDITSPACE",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVEPAGE",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "EDITBLOG",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVEBLOG",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "CREATEATTACHMENT",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVEATTACHMENT",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "COMMENT",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVECOMMENT",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "SETPAGEPERMISSIONS",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "REMOVEMAIL",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "EXPORTSPACE",
+          "permissionGranted": true,
+          "userPermission": false
+        },
+        {
+          "permissionType": "SETSPACEPERMISSIONS",
+          "permissionGranted": true,
+          "userPermission": false
+        }
+		]
 	}
 	]
 }`
@@ -109,13 +110,19 @@ https://developer.atlassian.com/display/DOCS/Creating+a+Remote+Debug+Target
 
 - Start from command prompt with atlas-debug and in Eclipse using 5005 port with debug profile.
 
-Learn and use FastDev:
-https://developer.atlassian.com/display/DOCS/Automatic+Plugin+Reinstallation+with+FastDev
-
-- Make changes to the source files and reload the changes with FastDev from development environment Confluence instance from browser. It will compile and deploy the result to the running Confluence. There is no need to restart Confluence. Javascript and Velocity changes do not need to be redeployed. You will just need to reload the page.
+Learn and use enableQuickReload
+- Make changes to the source files and run atlas-mvn package. Check from command prompt that is running atlas-debug that reload was successful.
 
 CURRENT STATUS
 ==============
+
+5.2.2017
+--------
+
+Added: Support for Confluence 6.x: Remove own permission added.
+Removed: Support for Confluence 5.X and older.
+Added: Support for quick reload.
+Not fixed: Lots of deprecated APIs still in use
 
 22.8.2015
 --------

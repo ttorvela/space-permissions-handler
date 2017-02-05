@@ -80,12 +80,9 @@ AJS.toInit(function() {
 							var $copyStatus= $("#copyStatus");
 							$copyStatus.html('');
 						}
-
-						var ver5 = versionNumber.substring(0, 1) == "5";
 						
 						var html = Confluence.Templates.SpacePermissionsHandler.listSpacePermissions(
-								{permissions: permissions, userFrom: AJS.$("#usernameFrom").attr("value"),
-								 version5: ver5, emoticonsUrl: AJS.params.staticResourceUrlPrefix + "/images/icons/emoticons"});
+								{permissions: permissions, userFrom: AJS.$("#usernameFrom").attr("value"), emoticonsUrl: AJS.params.staticResourceUrlPrefix + "/images/icons/emoticons"});
 						
 						var $permissionResults = $("#results");
 						$permissionResults.append(html);
