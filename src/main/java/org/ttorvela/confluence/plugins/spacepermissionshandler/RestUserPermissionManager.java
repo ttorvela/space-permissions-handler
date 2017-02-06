@@ -136,11 +136,11 @@ public class RestUserPermissionManager {
 				if (granted) {
 					// Need to set the view permission individually
 					// if some other permission was added.
-					SpacePermission spacePermission = SpacePermission
-							.createUserSpacePermission(
-									SpacePermission.VIEWSPACE_PERMISSION,
-									space, targetUserName);
-					spacePermissionManager.savePermission(spacePermission);
+//					SpacePermission spacePermission = SpacePermission
+//							.createUserSpacePermission(
+//									SpacePermission.VIEWSPACE_PERMISSION,
+//									space, targetUserName);
+//					spacePermissionManager.savePermission(spacePermission);
 				}
 			}
 		}
