@@ -91,13 +91,13 @@ public class RestUserPermissionManager {
 
 		for (SpacePermissionsEntity spe : spacePermissions) {
 			boolean granted = false;
+			boolean viewGranted = false;
 
 			if (spe.getPermissionStatus(SpacePermission.VIEWSPACE_PERMISSION)) {
 				Space space = spaceManager.getSpace(spe.getSpaceKey());
 
-				granted = setSpacePermissionForUser(spe, targetUserName,
-						SpacePermission.VIEWSPACE_PERMISSION, space,
-						onlyUserPermissions);
+				viewGranted = setSpacePermissionForUser(spe, targetUserName, SpacePermission.VIEWSPACE_PERMISSION,
+						space, onlyUserPermissions);
 				granted = setSpacePermissionForUser(spe, targetUserName,
 						SpacePermission.CREATEEDIT_PAGE_PERMISSION, space,
 						onlyUserPermissions) ? true : granted;
@@ -138,14 +138,15 @@ public class RestUserPermissionManager {
 						SpacePermission.ADMINISTER_SPACE_PERMISSION, space,
 						onlyUserPermissions) ? true : granted;
 
-				if (granted) {
+				if (granted && !viewGranted) {
 					// Need to set the view permission individually
 					// if some other permission was added.
-					SpacePermission spacePermission = SpacePermission
-							.createUserSpacePermission(
-									SpacePermission.VIEWSPACE_PERMISSION,
-									space, targetUserName);
-					spacePermissionManager.savePermission(spacePermission);
+					// BUT only if view permission was not there already!!!
+					if (!hasUserPermission(SpacePermission.VIEWSPACE_PERMISSION, space, targetUserName)) {
+						SpacePermission spacePermission = SpacePermission.createUserSpacePermission(SpacePermission.VIEWSPACE_PERMISSION, space,
+								targetUserName);
+						spacePermissionManager.savePermission(spacePermission);
+					}
 				}
 			}
 		}
@@ -180,6 +181,26 @@ public class RestUserPermissionManager {
 			spacePermissionsEntity.setPermissionStatus(spacePermissionType,
 					false, false);
 		}
+	}
+	@SuppressWarnings("deprecation")
+	private boolean hasUserPermission(String spacePermissionType, Space space, String username) {
+		boolean userPermission = false;
+
+		if (spacePermissionManager.hasPermission(spacePermissionType, space, userAccessor.getUser(username))) {
+			List<SpacePermission> spacePermissions = space.getPermissions();
+			for (SpacePermission spacePermission : spacePermissions) {
+				if (!spacePermission.isUserPermission()) {
+					continue;
+				} else if (spacePermission.getUserName().equalsIgnoreCase(username)) {
+					if (spacePermission.getType().equalsIgnoreCase(spacePermissionType)) {
+						userPermission = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		return userPermission;
 	}
 
 	private boolean setSpacePermissionForUser(
