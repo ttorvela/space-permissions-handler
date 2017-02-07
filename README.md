@@ -116,6 +116,12 @@ Learn and use enableQuickReload
 CURRENT STATUS
 ==============
 
+7.2.2017
+--------
+
+Fixed: View permission was added to a user several times when permissions were copied. Later when admin wanted to remove all user permissions from a user that had to be done several times to clean the hidden view permissions.
+Created: Branch for 1.x that contains releases that should work with 4.3.7 - 5.9.X
+
 5.2.2017
 --------
 

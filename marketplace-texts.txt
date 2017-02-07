@@ -8,3 +8,13 @@ Issue collector: https://github.com/ttorvela/space-permissions-handler/issues
 Version officially supported: No
 Release summary: Initial release with space permission view and copy capabilities.
 New in this release: Initial release with space permission view and copy capabilities.
+
+Highlight 1 title: View user's permissions in all spaces
+Highlight 1 summary: View user's space permissions for all spaces across Confluence site 
+
+Highlight 2 title: Clone user's permissions to another user
+Highlight 2 summary: Copy permissions from one user to another for all spaces. Optionally discard permissions originated from groups.
+
+Highlight 3 title: Available from Admin Console
+Highlight 3 summary: Plugin is available for Confluence admins at Admin Console.
+
