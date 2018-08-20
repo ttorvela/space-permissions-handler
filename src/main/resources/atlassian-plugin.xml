@@ -56,7 +56,7 @@
 	<template-context-item key="applicationPropertiesContextItem" component-ref="applicationProperties"
 context-key="applicationProperties" name="Application Properties Context Item"/> 
 
-	<web-item key="conf-menu-item" name="Space Permissions Handler" section="system.admin/configuration" weight="10">
+	<web-item key="conf-menu-item" name="Space Permissions Handler" section="system.admin/security" weight="60">
 	  <description>Link to Space Permissions Handler admin page.</description>
 	  <label key="spacepermissionshandler.admin.label" />
 	  <link linkId="space-permissions-handler-admin-link">/plugins/servlet/spacepermissionshandler/admin</link>

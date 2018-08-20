@@ -116,6 +116,11 @@ Learn and use enableQuickReload
 CURRENT STATUS
 ==============
 
+20.8.2018
+---------
+
+Changed: Space Permissions Handler menu item is now in Admin Console's Security section.
+
 7.2.2017
 --------
 
